@@ -6,6 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/textView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/gradient"></LinearLayout>
+
     <EditText
         android:id="@+id/Recherche_bar"
         android:layout_width="0dp"
@@ -17,10 +27,10 @@
         android:drawableLeft="@drawable/search_vector"
         android:ems="10"
         android:fontFamily="@font/montserrat_medium"
-        android:hint="Rechercher"
+        android:hint=" Rechercher"
         android:inputType="text"
-        android:padding="14dp"
-        android:textSize="14sp"
+        android:padding="12dp"
+        android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
@@ -30,12 +40,12 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="56dp"
         android:fontFamily="@font/montserrat_bold"
         android:text="Ou choisis une categorie"
         android:textColor="@color/black"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Recherche_bar" />
 
@@ -49,8 +59,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Recherche_bar"
-        app:layout_constraintVertical_bias="0.29000002">
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintVertical_bias="0.16000003">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -99,7 +109,7 @@
                     android:layout_margin="8dp"
                     android:background="@drawable/main_icon_bckgrnd"
                     android:padding="8dp"
-                    app:srcCompat="@drawable/water" />
+                    app:srcCompat="@drawable/paint_roller" />
 
                 <TextView
                     android:id="@+id/textView10"
@@ -107,7 +117,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
                     android:fontFamily="@font/montserrat_medium"
-                    android:text="Plomberie"
+                    android:text="Peintre"
                     android:textAlignment="center"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
@@ -127,7 +137,7 @@
                     android:layout_margin="8dp"
                     android:background="@drawable/main_icon_bckgrnd"
                     android:padding="8dp"
-                    app:srcCompat="@drawable/water" />
+                    app:srcCompat="@drawable/brick_wall" />
 
                 <TextView
                     android:id="@+id/textView10"
@@ -135,7 +145,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
                     android:fontFamily="@font/montserrat_medium"
-                    android:text="Plomberie"
+                    android:text="Maçonnerie"
                     android:textAlignment="center"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
@@ -162,7 +172,7 @@
                     android:layout_margin="8dp"
                     android:background="@drawable/main_icon_bckgrnd"
                     android:padding="8dp"
-                    app:srcCompat="@drawable/water" />
+                    app:srcCompat="@drawable/electrical_energy" />
 
                 <TextView
                     android:id="@+id/textView10"
@@ -326,4 +336,5 @@
         </LinearLayout>
 
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
