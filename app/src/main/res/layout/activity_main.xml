@@ -9,12 +9,12 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:background="@drawable/gradient"
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/textView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:background="@drawable/gradient"></LinearLayout>
+        app:layout_constraintTop_toTopOf="parent"></LinearLayout>
 
     <EditText
         android:id="@+id/Recherche_bar"
@@ -89,10 +89,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
                     android:fontFamily="@font/montserrat_medium"
-                    android:text="Plomberie"
+                    android:text="Plombier"
                     android:textAlignment="center"
                     android:textColor="@color/black"
-                    android:textSize="14sp" />
+                    android:textSize="12sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -120,7 +120,7 @@
                     android:text="Peintre"
                     android:textAlignment="center"
                     android:textColor="@color/black"
-                    android:textSize="14sp" />
+                    android:textSize="12sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -145,10 +145,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
                     android:fontFamily="@font/montserrat_medium"
-                    android:text="Maçonnerie"
+                    android:text="Maçon"
                     android:textAlignment="center"
                     android:textColor="@color/black"
-                    android:textSize="14sp" />
+                    android:textSize="12sp" />
             </LinearLayout>
 
         </LinearLayout>
@@ -180,10 +180,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
                     android:fontFamily="@font/montserrat_medium"
-                    android:text="Plomberie"
+                    android:text="Electricien"
                     android:textAlignment="center"
                     android:textColor="@color/black"
-                    android:textSize="14sp" />
+                    android:textSize="12sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -200,7 +200,7 @@
                     android:layout_margin="8dp"
                     android:background="@drawable/main_icon_bckgrnd"
                     android:padding="8dp"
-                    app:srcCompat="@drawable/water" />
+                    app:srcCompat="@drawable/welding" />
 
                 <TextView
                     android:id="@+id/textView10"
@@ -208,10 +208,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
                     android:fontFamily="@font/montserrat_medium"
-                    android:text="Plomberie"
+                    android:text="Soudeur"
                     android:textAlignment="center"
                     android:textColor="@color/black"
-                    android:textSize="14sp" />
+                    android:textSize="12sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -228,7 +228,7 @@
                     android:layout_margin="8dp"
                     android:background="@drawable/main_icon_bckgrnd"
                     android:padding="8dp"
-                    app:srcCompat="@drawable/water" />
+                    app:srcCompat="@drawable/satellite_dish" />
 
                 <TextView
                     android:id="@+id/textView10"
@@ -236,10 +236,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
                     android:fontFamily="@font/montserrat_medium"
-                    android:text="Plomberie"
+                    android:text="Installation parabole"
                     android:textAlignment="center"
                     android:textColor="@color/black"
-                    android:textSize="14sp" />
+                    android:textSize="12sp" />
             </LinearLayout>
 
         </LinearLayout>
@@ -263,7 +263,7 @@
                     android:layout_margin="8dp"
                     android:background="@drawable/main_icon_bckgrnd"
                     android:padding="8dp"
-                    app:srcCompat="@drawable/water" />
+                    app:srcCompat="@drawable/roof" />
 
                 <TextView
                     android:id="@+id/textView10"
@@ -271,10 +271,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
                     android:fontFamily="@font/montserrat_medium"
-                    android:text="Plomberie"
+                    android:text="Réparation de toit"
                     android:textAlignment="center"
                     android:textColor="@color/black"
-                    android:textSize="14sp" />
+                    android:textSize="12sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -291,7 +291,7 @@
                     android:layout_margin="8dp"
                     android:background="@drawable/main_icon_bckgrnd"
                     android:padding="8dp"
-                    app:srcCompat="@drawable/water" />
+                    app:srcCompat="@drawable/air_conditioner" />
 
                 <TextView
                     android:id="@+id/textView10"
@@ -299,10 +299,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
                     android:fontFamily="@font/montserrat_medium"
-                    android:text="Plomberie"
+                    android:text="Climatisation"
                     android:textAlignment="center"
                     android:textColor="@color/black"
-                    android:textSize="14sp" />
+                    android:textSize="12sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -319,7 +319,7 @@
                     android:layout_margin="8dp"
                     android:background="@drawable/main_icon_bckgrnd"
                     android:padding="8dp"
-                    app:srcCompat="@drawable/water" />
+                    app:srcCompat="@drawable/moving_truck" />
 
                 <TextView
                     android:id="@+id/textView10"
@@ -327,14 +327,25 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
                     android:fontFamily="@font/montserrat_medium"
-                    android:text="Plomberie"
+                    android:text="Déménagement"
                     android:textAlignment="center"
                     android:textColor="@color/black"
-                    android:textSize="14sp" />
+                    android:textSize="12sp" />
             </LinearLayout>
 
         </LinearLayout>
 
     </LinearLayout>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@color/white"
+        app:menu="@menu/bottom_nav_menu"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
