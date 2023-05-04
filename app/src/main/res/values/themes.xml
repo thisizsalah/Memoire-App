@@ -12,5 +12,8 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor">@color/blue2</item>
         <!-- Customize your theme here. -->
+        <item name="fontFamily">@font/montserrat_medium</item>
+
     </style>
+
 </resources>
