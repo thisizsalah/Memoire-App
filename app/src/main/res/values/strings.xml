@@ -7,4 +7,13 @@
     <string name="climatisation">Climatisation</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="creez_un_compte">Créez un compte</string>
+
+    <string-array name="Wilayas">
+        <item>Wilaya</item>
+        <item>Alger</item>
+        <item>Bejaia</item>
+        <item>Bordj-Bou-Arreridj</item>
+        <item>Setif</item>
+    </string-array>
 </resources>

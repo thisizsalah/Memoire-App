@@ -34,7 +34,6 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
-        app:cardCornerRadius="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -44,7 +43,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/cardviewshape">
+            android:background="@drawable/mainshape">
 
             <TextView
                 android:id="@+id/textView4"
@@ -129,7 +128,7 @@
                 android:layout_marginEnd="16dp"
                 android:background="@drawable/button_commencer"
                 android:textStyle="bold"
-                android:paddingLeft="12dp"
+                android:gravity="center"
                 android:text="Se Connecter"
                 android:textAllCaps="false"
                 android:textColor="@color/white"

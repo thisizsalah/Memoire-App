@@ -30,7 +30,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:background="@drawable/cardviewshape"
+            android:background="@drawable/onboardshape"
             android:layout_gravity="center">
 
             <TextView
