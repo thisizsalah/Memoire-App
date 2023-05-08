@@ -1,8 +1,10 @@
-package com.madi.msdztest;
+package com.madi.msdztest.login;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.madi.msdztest.R;
 
 public class Login extends AppCompatActivity {
 

@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.madi.msdztest.onboarding.OnBoarding;
+
 public class Splash extends AppCompatActivity {
 
     @Override

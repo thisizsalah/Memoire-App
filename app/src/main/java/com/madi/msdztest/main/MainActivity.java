@@ -1,4 +1,4 @@
-package com.madi.msdztest;
+package com.madi.msdztest.main;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 
+import com.madi.msdztest.R;
 import com.madi.msdztest.databinding.ActivityMainBinding;
 
 public class  MainActivity extends AppCompatActivity {
@@ -22,7 +23,7 @@ public class  MainActivity extends AppCompatActivity {
 
             switch (item.getItemId()){
                 case R.id.Acceuil:
-                    replaceFragement(new Fragment() );
+                    replaceFragement(new Fragment());
                     break;
                 case R.id.Messages:
                     replaceFragement(new MessagesFragment());

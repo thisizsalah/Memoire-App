@@ -1,14 +1,13 @@
-package com.madi.msdztest;
+package com.madi.msdztest.signup;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
-import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Bundle;
-import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
+import com.madi.msdztest.R;
 
 public class SignupForm extends AppCompatActivity {
     private TabLayout tabLayout;

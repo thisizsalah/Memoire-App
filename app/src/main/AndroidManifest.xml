@@ -12,23 +12,20 @@
         android:theme="@style/Theme.MSDZTest"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".main.MainActivity"
             android:exported="false" />
         <activity
             android:name=".Splash"
             android:exported="false" />
         <activity
-            android:name=".testtt"
+            android:name=".login.Login"
             android:exported="false" />
         <activity
-            android:name=".Login"
-            android:exported="false" />
-        <activity
-            android:name=".OnBoarding"
+            android:name=".onboarding.OnBoarding"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".SignupForm"
+            android:name=".signup.SignupForm"
             android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>
