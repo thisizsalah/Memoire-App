@@ -120,6 +120,31 @@ public class SignupArtisan extends Fragment {
         wilayas.add("33. Illizi");
         wilayas.add("34. Bordj Bou Arréridj");
         wilayas.add("35. Boumerdès");
+        wilayas.add("36. El Tarf");
+        wilayas.add("37. Tindouf");
+        wilayas.add("38. Tissemsilt");
+        wilayas.add("39. El Oued");
+        wilayas.add("40. Khenchela");
+        wilayas.add("41. Souk Ahras");
+        wilayas.add("42. Tipaza");
+        wilayas.add("43. Mila");
+        wilayas.add("44. Aïn Defla");
+        wilayas.add("45. Naâma");
+        wilayas.add("46. Aïn Témouchent");
+        wilayas.add("47. Ghardaïa");
+        wilayas.add("48. Relizane");
+        wilayas.add("49. EL EULMA");
+        wilayas.add("50. Bordj Badji Mokhtar");
+        wilayas.add("51. Béni Abbès");
+        wilayas.add("52. Ouled Djellal");
+        wilayas.add("53. Ain salah");
+        wilayas.add("54. Ain guezzam");
+        wilayas.add("55. Djanet");
+        wilayas.add("56. El Mghair");
+        wilayas.add("57. El Menia");
+        wilayas.add("58. Touggourt");
+
+
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item,wilayas);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);

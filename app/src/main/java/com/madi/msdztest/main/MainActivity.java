@@ -17,13 +17,13 @@ public class  MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        replaceFragement(new Fragment());
+        replaceFragement(new HomeFragment());
 
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
 
             switch (item.getItemId()){
                 case R.id.Acceuil:
-                    replaceFragement(new Fragment());
+                    replaceFragement(new HomeFragment());
                     break;
                 case R.id.Messages:
                     replaceFragement(new MessagesFragment());
