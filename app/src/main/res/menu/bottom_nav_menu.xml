@@ -10,7 +10,7 @@
         android:icon="@drawable/ic_messages"
         android:id="@+id/Messages"/>
     <item
-        android:title="Paramètres"
-        android:icon="@drawable/ic_settings"
-        android:id="@+id/Paramètres"/>
+        android:title="Profile"
+        android:icon="@drawable/ic_profile"
+        android:id="@+id/Profile"/>
 </menu>

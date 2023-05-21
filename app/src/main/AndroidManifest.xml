@@ -17,9 +17,7 @@
         <activity
             android:name=".signup.SignupForm"
             android:exported="false" />
-        <activity
-            android:name=".main.MainActivity"
-            android:exported="false" />
+
         <activity
             android:name=".login.Login"
             android:exported="false" />
@@ -27,7 +25,7 @@
             android:name=".onboarding.OnBoarding"
             android:exported="false" />
         <activity
-            android:name=".UserProfile"
+            android:name=".main.MainActivity"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

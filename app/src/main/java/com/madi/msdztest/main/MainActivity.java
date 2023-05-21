@@ -28,8 +28,8 @@ public class  MainActivity extends AppCompatActivity {
                 case R.id.Messages:
                     replaceFragement(new MessagesFragment());
                     break;
-                case R.id.Paramètres:
-                    replaceFragement(new SettingsFragment());
+                case R.id.Profile:
+                    replaceFragement(new ProfileFragment());
                     break;
 
             }

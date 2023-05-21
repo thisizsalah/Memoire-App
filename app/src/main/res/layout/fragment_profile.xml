@@ -4,28 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UserProfile"
     android:background="@color/white">
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/frame_shape"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageButton
-            android:id="@+id/BackButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="14dp"
-            android:layout_marginTop="12dp"
-            android:background="@color/blue"
-            app:srcCompat="@drawable/ic_back" />
-    </FrameLayout>
 
     <TextView
         android:id="@+id/textView10"
@@ -33,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Profile"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -56,8 +35,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="Aberkane Ayoub"
-        android:textColor="@color/white"
-        android:textSize="20dp"
+        android:textColor="@color/black"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -249,12 +228,16 @@
                 android:layout_marginStart="20dp"
                 android:text="**********"
                 android:textAlignment="viewStart" />
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"/>
 
             <TextView
                 android:id="@+id/changer_mdp"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="end"
+                android:layout_gravity="start"
                 android:layout_marginStart="40dp"
                 android:layout_marginEnd="8dp"
                 android:gravity="end"
@@ -298,7 +281,7 @@
         android:layout_marginBottom="16dp"
         android:background="@drawable/button_deconnecter"
         android:drawableStart="@drawable/ic_logout"
-        android:gravity=""
+        android:gravity="center"
         android:padding="8dp"
         android:textAllCaps="false"
         android:text="Se Deconnecter"
