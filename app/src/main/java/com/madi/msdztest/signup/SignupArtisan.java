@@ -30,7 +30,7 @@ public class SignupArtisan extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    Spinner spinner;
+    Spinner spinner,spinnerCat;
 
     public SignupArtisan() {
         // Required empty public constructor
@@ -58,6 +58,7 @@ public class SignupArtisan extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initSpinner();
+        initCatSpinner();
     }
 
     @Override
@@ -81,6 +82,7 @@ public class SignupArtisan extends Fragment {
     }
     public void initializeView(View rootView){
         spinner = rootView.findViewById(R.id.spinner_wilaya);
+        spinnerCat = rootView.findViewById(R.id.spinner_categorie);
     }
     public void initSpinner() {
         ArrayList<String> wilayas = new ArrayList<String>();
@@ -148,5 +150,24 @@ public class SignupArtisan extends Fragment {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item,wilayas);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
+    }
+    public void initCatSpinner(){
+        ArrayList<String> categorie = new ArrayList<String>();
+        categorie.add("Categorie");
+        categorie.add("Climatisation");
+        categorie.add("Déménagement");
+        categorie.add("Electrien");
+        categorie.add("Installation Parabole");
+        categorie.add("Maçon");
+        categorie.add("Peintre");
+        categorie.add("Plombier");
+        categorie.add("Réparation de toit");
+        categorie.add("Soudeur");
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item,categorie);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerCat.setAdapter(adapter);
+
+
     }
 }
