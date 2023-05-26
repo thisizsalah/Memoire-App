@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,14 +21,17 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
 import com.madi.msdztest.R;
 import com.madi.msdztest.login.Login;
 
 public class SignupClient extends Fragment {
 
-    private EditText ClientNom, ClientPrenom, ClientEmail, ClientNumeroTlfn, ClientMdp, ClientReMdp;
-
+    private EditText ClientNom, ClientPrenom, ClientEmail, ClientNumeroTlf, ClientMdp, ClientReMdp;
+    private static final String TAG="SignupClient";
     public SignupClient() {
         // Required empty public constructor
     }
@@ -43,7 +47,7 @@ public class SignupClient extends Fragment {
         ClientNom = view.findViewById(R.id.Client_Nom);
         ClientPrenom = view.findViewById(R.id.Client_Prenom);
         ClientEmail = view.findViewById(R.id.Client_Email);
-        ClientNumeroTlfn = view.findViewById(R.id.Client_Numero_Tlfn);
+        ClientNumeroTlf = view.findViewById(R.id.Client_Numero_Tlf);
         ClientMdp = view.findViewById(R.id.Client_Mdp);
         ClientReMdp = view.findViewById(R.id.Client_Re_Mdp);
         Button BtnCreer = view.findViewById(R.id.Button_Creer_Compte);
@@ -53,7 +57,7 @@ public class SignupClient extends Fragment {
                 String textNom = ClientNom.getText().toString();
                 String textPrenom = ClientPrenom.getText().toString();
                 String textEmail = ClientEmail.getText().toString();
-                String textNumeroTlfn = ClientNumeroTlfn.getText().toString();
+                String textNumeroTlf = ClientNumeroTlf.getText().toString();
                 String textMdp = ClientMdp.getText().toString();
                 String textReMdp = ClientReMdp.getText().toString();
                 if (TextUtils.isEmpty(textNom)) {
@@ -73,14 +77,14 @@ public class SignupClient extends Fragment {
                     Toast.makeText(getContext(), "Veuillez re-entrer votre E-mail !", Toast.LENGTH_SHORT).show();
                     ClientEmail.setError("Valider E-mail est obligatoire");
                     ClientEmail.requestFocus();
-                } else if (TextUtils.isEmpty(textNumeroTlfn)) {
+                } else if (TextUtils.isEmpty(textNumeroTlf)) {
                     Toast.makeText(getContext(), "Veuillez entrer votre Numéro de téléphone !", Toast.LENGTH_SHORT).show();
-                    ClientNumeroTlfn.setError("Numéro de téléphone est obligatoire");
-                    ClientNumeroTlfn.requestFocus();
-                } else if (textNumeroTlfn.length() != 10) {
+                    ClientNumeroTlf.setError("Numéro de téléphone est obligatoire");
+                    ClientNumeroTlf.requestFocus();
+                } else if (textNumeroTlf.length() != 10) {
                     Toast.makeText(getContext(), "Veuillez re-entrer votre Numéro de téléphone !", Toast.LENGTH_SHORT).show();
-                    ClientNumeroTlfn.setError("Numéro de téléphone doit comporter 10 chiffres");
-                    ClientNumeroTlfn.requestFocus();
+                    ClientNumeroTlf.setError("Numéro de téléphone doit comporter 10 chiffres");
+                    ClientNumeroTlf.requestFocus();
                 } else if (TextUtils.isEmpty(textMdp)) {
                     Toast.makeText(getContext(), "Veuillez entrer votre mot de passe !", Toast.LENGTH_SHORT).show();
                     ClientMdp.setError("mot de passe est obligatoire");
@@ -101,7 +105,7 @@ public class SignupClient extends Fragment {
                     ClientMdp.clearComposingText();
                     ClientReMdp.clearComposingText();
                 } else {
-                    registerUser(textNom, textPrenom, textEmail, textNumeroTlfn, textMdp, textReMdp);
+                    registerUser(textNom, textPrenom, textEmail, textNumeroTlf, textMdp, textReMdp);
 
                 }
             }
@@ -115,14 +119,32 @@ public class SignupClient extends Fragment {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    Toast.makeText(getContext(), "Client créer avec succés", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Votre compte est créer avec succés", Toast.LENGTH_SHORT).show();
                     FirebaseUser firebaseUser = auth.getCurrentUser();
 
 
                     firebaseUser.sendEmailVerification();
 
                     Intent intent = new Intent(getContext(), Login.class);
+                    startActivity(intent);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                }
+                else {
+                    try {
+                        throw task.getException();
+                    } catch (FirebaseAuthWeakPasswordException e) {
+                        ClientMdp.setError("Votre mot de passe est faible. Veuillez choisir un mot de passe plus fort");
+                        ClientMdp.requestFocus();
+                    } catch (FirebaseAuthInvalidCredentialsException e){
+                        ClientEmail.setError("Adresse e-mail invalide. Veuillez entrer un email valide");
+                        ClientEmail.requestFocus();
+                    } catch (FirebaseAuthUserCollisionException e) {
+                        ClientEmail.setError("L'e-mail que vous avez saisi est déjà associé à un autre compte. Veuillez utiliser une adresse e-mail différente");
+                        ClientEmail.requestFocus();
+                    } catch (Exception e) {
+                        Log.e(TAG,e.getMessage());
+                        Toast.makeText(getContext(),e.getMessage() , Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });

@@ -26,7 +26,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <EditText
-                android:id="@+id/Client_Nom"
+                android:id="@+id/Artisan_Nom"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginStart="16dp"
@@ -41,7 +41,7 @@
                 android:textSize="14sp" />
 
             <EditText
-                android:id="@+id/Client_Prenom"
+                android:id="@+id/Artisan_Prenom"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginStart="16dp"
@@ -56,7 +56,7 @@
                 android:textSize="14sp" />
 
             <EditText
-                android:id="@+id/Client_Email"
+                android:id="@+id/Artisan_Email"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginStart="16dp"
@@ -71,7 +71,7 @@
                 android:textSize="14sp" />
 
             <EditText
-                android:id="@+id/Client_Numero_Tlfn"
+                android:id="@+id/Artisan_Numero_Tlf"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginStart="16dp"
@@ -86,7 +86,7 @@
                 android:textSize="14sp" />
 
             <EditText
-                android:id="@+id/Client_Mdp"
+                android:id="@+id/Artisan_Mdp"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginStart="16dp"
@@ -101,7 +101,7 @@
                 android:textSize="14sp" />
 
             <EditText
-                android:id="@+id/Client_Re_Mdp"
+                android:id="@+id/Artisan_Re_Mdp"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginStart="16dp"

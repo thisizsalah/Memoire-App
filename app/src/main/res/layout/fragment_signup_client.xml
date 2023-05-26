@@ -70,7 +70,7 @@
             android:textSize="14sp" />
 
         <EditText
-            android:id="@+id/Client_Numero_Tlfn"
+            android:id="@+id/Client_Numero_Tlf"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginStart="16dp"
@@ -123,6 +123,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="48dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginBottom="24dp"
         android:background="@drawable/button_commencer"
         android:gravity="center"
         android:padding="8dp"

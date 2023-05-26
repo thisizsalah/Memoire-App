@@ -1,33 +1,41 @@
 {
   "project_info": {
-    "project_number": "440778693810",
-    "project_id": "msdz-b0982",
-    "storage_bucket": "msdz-b0982.appspot.com"
+    "project_number": "494274996499",
+    "project_id": "msdz-66bad",
+    "storage_bucket": "msdz-66bad.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:440778693810:android:ba85af0e4a4040edad7dab",
+        "mobilesdk_app_id": "1:494274996499:android:1f478846c798d914d252e6",
         "android_client_info": {
           "package_name": "com.madi.msdztest"
         }
       },
       "oauth_client": [
         {
-          "client_id": "440778693810-762nr6d4pd28fniju0o73ct394aipa58.apps.googleusercontent.com",
+          "client_id": "494274996499-lididratmadb3u4bm8cfk0cuvg3k7ouv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.madi.msdztest",
+            "certificate_hash": "416d61d38c7311259954e1daf4d2bf82fed15546"
+          }
+        },
+        {
+          "client_id": "494274996499-tq5diag7kp81bbnkaeuvodamsvh4gohc.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCpw8Z5d-mF0HP1VGlj_81WVX3vWvWgMVU"
+          "current_key": "AIzaSyCLc_qBJSOdDBQxInlv3SMKpnvw9QxSki8"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "440778693810-762nr6d4pd28fniju0o73ct394aipa58.apps.googleusercontent.com",
+              "client_id": "494274996499-tq5diag7kp81bbnkaeuvodamsvh4gohc.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

@@ -9,11 +9,34 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="creez_un_compte">Créez un compte</string>
 
-    <string-array name="Wilayas">
-        <item>Wilaya</item>
-        <item>Alger</item>
-        <item>Bejaia</item>
-        <item>Bordj-Bou-Arreridj</item>
-        <item>Setif</item>
+    <string-array name="items_name">
+        <item>houcine plombier</item>
+        <item>Cherif Chauffagiste</item>
+        <item>MR Plombier</item>
+        <item>Plomberie Aissaoui</item>
+        <item>Hamid Plumber</item>
+        <item>Tous Plomberie Inc</item>
+        <item>Plombier inc</item>
     </string-array>
+
+    <string-array name="items_cat">
+        <item>Plombier</item>
+        <item>Plombier</item>
+        <item>Plombier</item>
+        <item>Plombier</item>
+        <item>Plombier</item>
+        <item>Plombier</item>
+        <item>Plombier</item>
+    </string-array>
+
+    <string-array name="items_city">
+        <item>Bordj Bou Arreridj</item>
+        <item>El Eulma</item>
+        <item>Bordj Bou Arreridj</item>
+        <item>Bordj Bou Arreridj</item>
+        <item>Bordj Bou Arreridj</item>
+        <item>Setif</item>
+        <item>Bordj Bou Arreridj</item>
+    </string-array>
+    <string name="title_activity_list">ListActivity</string>
 </resources>
