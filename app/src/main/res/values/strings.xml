@@ -10,13 +10,13 @@
     <string name="creez_un_compte">Créez un compte</string>
 
     <string-array name="items_name">
-        <item>houcine plombier</item>
-        <item>Cherif cherif</item>
+        <item>houcine Seffari</item>
+        <item>Cherif attia</item>
         <item>MR Plombier</item>
-        <item>Plomberie Aissaoui</item>
-        <item>Hamid Plumber</item>
-        <item>Tous Plomberie Inc</item>
-        <item>Plombier inc</item>
+        <item>Najib Aissaoui</item>
+        <item>Hamid benmila</item>
+        <item>Mouhamed Makhloufi</item>
+        <item>Wassim Harche</item>
     </string-array>
 
     <string-array name="items_cat">
@@ -31,7 +31,7 @@
 
     <string-array name="items_city">
         <item>Bordj Bou Arreridj</item>
-        <item>El Eulma</item>
+        <item>Bordj Bou Arreridj</item>
         <item>Bordj Bou Arreridj</item>
         <item>Bordj Bou Arreridj</item>
         <item>Bordj Bou Arreridj</item>

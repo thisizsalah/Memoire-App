@@ -17,12 +17,16 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.madi.msdztest.ArtisanProfileActivity;
 import com.madi.msdztest.R;
-import com.madi.msdztest.main.HomeFragment;
 import com.madi.msdztest.main.MainActivity;
 import com.madi.msdztest.signup.SignupForm;
+
+import java.util.Objects;
 
 public class Login extends AppCompatActivity {
     private EditText Email, MotDePasse;
@@ -84,9 +88,9 @@ public class Login extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     Toast.makeText(Login.this, "Bienvenue ! ", Toast.LENGTH_SHORT).show();
-                    Intent intent2 = new Intent(Login.this, MainActivity.class);
-                    startActivity(intent2);
-                    finish();
+                    String userId = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
+                    checkUserRole(userId);
+
                 } else {
                     // Check the specific error code
                     if (task.getException() instanceof FirebaseAuthInvalidUserException) {
@@ -97,7 +101,45 @@ public class Login extends AppCompatActivity {
                             Toast.makeText(Login.this, "Utilisateur introuvable.", Toast.LENGTH_SHORT).show();
                         }
                     } else {
-                        Toast.makeText(Login.this, "Échec de la connexion!,veuillez vérifier vos informations ", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Login.this, "Échec de la connexion! veuillez vérifier vos informations ", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
+    }
+
+    private void checkUserRole(String userId) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        // Check if the user exists in the "Artisans" collection
+        DocumentReference artisanRef = db.collection("Artisans").document(userId);
+        artisanRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot artisanDocument = task.getResult();
+                    if (artisanDocument != null && artisanDocument.exists()) {
+                        // User is an artisan
+                        Intent artisanIntent = new Intent(Login.this, ArtisanProfileActivity.class);
+                        startActivity(artisanIntent);
+                        finish();
+                    } else {
+                        // User is not an artisan, check the "Clients" collection
+                        DocumentReference clientRef = db.collection("clients").document(userId);
+                        clientRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    DocumentSnapshot clientDocument = task.getResult();
+                                    if (clientDocument != null && clientDocument.exists()) {
+                                        // User is a client
+                                        Intent clientIntent = new Intent(Login.this, MainActivity.class);
+                                        startActivity(clientIntent);
+                                        finish();
+                                    }
+                                }
+                            }
+                        });
                     }
                 }
             }

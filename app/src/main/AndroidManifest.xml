@@ -14,11 +14,13 @@
         android:theme="@style/Theme.MSDZTest"
         tools:targetApi="31">
         <activity
+            android:name=".ArtisanProfileActivity"
+            android:exported="false" />
+        <activity
             android:name=".ListActivity"
             android:exported="false"
             android:label="@string/title_activity_list"
             android:theme="@style/Theme.MSDZTest" />
-
         <activity
             android:name=".main.MainActivity"
             android:exported="false" />
@@ -35,11 +37,10 @@
             android:name=".Splash"
             android:exported="true">
             <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
     </application>
 

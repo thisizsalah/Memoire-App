@@ -25,7 +25,7 @@
         android:layout_height="160dp"
         android:layout_marginTop="48dp"
         android:elevation="12dp"
-        android:src="@drawable/user_icon"
+        android:src="@drawable/pic1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView10" />
@@ -35,7 +35,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Aberkane Ayoub"
+        android:text="Houcine Seffari"
         android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -44,12 +44,24 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profile_picture" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Plombier"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView12"
+        app:layout_constraintVertical_bias="0.0" />
+
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"
         android:background="@drawable/mainshape_white"
         android:orientation="vertical"
@@ -84,7 +96,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginStart="62dp"
-                android:text="Aberkane" />
+                android:text="Houcine" />
 
 
         </LinearLayout>
@@ -120,7 +132,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginStart="40dp"
-                android:text="Ayoub" />
+                android:text="Seffari" />
 
 
         </LinearLayout>
@@ -156,7 +168,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginStart="50dp"
-                android:text="ayoubabr@gmail.com" />
+                android:text="houcineS34@gmail.com" />
 
 
         </LinearLayout>
@@ -192,7 +204,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginStart="25dp"
-                android:text="07 78 78 10 60" />
+                android:text="07 79 50 10 60" />
 
 
         </LinearLayout>
@@ -229,10 +241,11 @@
                 android:layout_marginStart="20dp"
                 android:text="**********"
                 android:textAlignment="viewStart" />
+
             <View
                 android:layout_width="0dp"
                 android:layout_height="1dp"
-                android:layout_weight="1"/>
+                android:layout_weight="1" />
 
             <TextView
                 android:id="@+id/changer_mdp"
@@ -260,6 +273,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="64dp"
         android:background="@drawable/button_commencer"
+        android:drawableStart="@drawable/ic_edit"
         android:gravity="center"
         android:padding="8dp"
         android:text="Modifier Profil"
@@ -267,7 +281,6 @@
         android:textColor="@color/white"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:drawableStart="@drawable/ic_edit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
@@ -278,8 +291,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="40dp"
         android:layout_marginEnd="32dp"
+        android:layout_marginBottom="32dp"
         android:background="@drawable/button_deconnecter"
         android:drawableStart="@drawable/ic_logout"
         android:gravity="center"
@@ -289,10 +302,10 @@
         android:textColor="@color/white"
         android:textSize="18sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_modifier" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
