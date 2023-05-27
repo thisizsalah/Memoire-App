@@ -58,8 +58,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             tvCat = itemView.findViewById(R.id.textView16);
             tvCity = itemView.findViewById(R.id.textView17);
 
-            imageView.setBackground(ContextCompat.getDrawable(itemView.getContext(), R.drawable.circle_background));
-            imageView.setClipToOutline(true);
+
         }
     }
 }

@@ -21,6 +21,8 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -28,10 +30,15 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.madi.msdztest.R;
 import com.madi.msdztest.login.Login;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class SignupArtisan extends Fragment {
@@ -94,7 +101,18 @@ public class SignupArtisan extends Fragment {
                 String textNumeroTlf = ArtisanNumeroTlf.getText().toString();
                 String textMdp = ArtisanMdp.getText().toString();
                 String textReMdp = ArtisanReMdp.getText().toString();
-                if (TextUtils.isEmpty(textNom)) {
+                String wilaya = spinnerWilaya.getSelectedItem().toString();
+                String categorie = spinnerCat.getSelectedItem().toString();
+
+                if (categorie.equals("Catégorie")) {
+                    Toast.makeText(getContext(), "Veuillez sélectionner votre catégorie ", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                else if (wilaya.equals("Selectionner Wilaya")) {
+                    Toast.makeText(getContext(), "Veuillez sélectionner votre wilaya !", Toast.LENGTH_SHORT).show();
+
+                }
+                else if (TextUtils.isEmpty(textNom)) {
                     Toast.makeText(getContext(), "Veuillez entrer votre Nom !", Toast.LENGTH_SHORT).show();
                     ArtisanNom.setError("Nom est obligatoire");
                     ArtisanNom.requestFocus();
@@ -102,6 +120,8 @@ public class SignupArtisan extends Fragment {
                     Toast.makeText(getContext(), "Veuillez entrer votre Prénom !", Toast.LENGTH_SHORT).show();
                     ArtisanPrenom.setError("Prénom est obligatoire");
                     ArtisanPrenom.requestFocus();
+
+                   
 
                 } else if (TextUtils.isEmpty(textEmail)) {
                     Toast.makeText(getContext(), "Veuillez entrer votre E-mail !", Toast.LENGTH_SHORT).show();
@@ -139,7 +159,7 @@ public class SignupArtisan extends Fragment {
                     ArtisanMdp.clearComposingText();
                     ArtisanReMdp.clearComposingText();
                 } else {
-                    registerUser(textNom, textPrenom, textEmail, textNumeroTlf, textMdp, textReMdp);
+                    registerUser(textNom, textPrenom, textEmail, textNumeroTlf, textMdp,wilaya,categorie);
 
                 }
             }
@@ -147,8 +167,10 @@ public class SignupArtisan extends Fragment {
 
         return view;
     }
-    private void registerUser(String textNom, String textPrenom, String textEmail, String textNumeroTlf, String textMdp, String textReMdp) {
+    private void registerUser(String textNom, String textPrenom, String textEmail, String textNumeroTlf, String textMdp, String wilaya, String categorie) {
         FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
         auth.createUserWithEmailAndPassword(textEmail, textMdp).addOnCompleteListener((Activity) getContext(), new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -158,6 +180,31 @@ public class SignupArtisan extends Fragment {
 
 
                     firebaseUser.sendEmailVerification();
+
+                    String userId = firebaseUser.getUid();
+                    CollectionReference usersCollection = db.collection("Artisans");
+                    DocumentReference userDocument = usersCollection.document(userId);
+
+                    Map<String, Object> user = new HashMap<>();
+                    user.put("Nom", textNom);
+                    user.put("Prénom", textPrenom);
+                    user.put("Email", textEmail);
+                    user.put("Numero de téléphone", textNumeroTlf);
+                    user.put("Mot de passe", textMdp);
+                    user.put("Wilaya", wilaya);
+                    user.put("Catégorie", categorie);
+                    userDocument.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void unused) {
+                                    Log.d(TAG,"Votre compte est créer avec succés");
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.w(TAG,"Erreur !", e);
+                                }
+                            });
 
                     Intent intent = new Intent(getContext(), Login.class);
                     startActivity(intent);
@@ -255,7 +302,7 @@ public class SignupArtisan extends Fragment {
     }
     public void initSpinnerCat(){
         ArrayList<String> categorie = new ArrayList<String>();
-        categorie.add("Categorie");
+        categorie.add("Catégorie");
         categorie.add("Climatisation");
         categorie.add("Déménagement");
         categorie.add("Electrien");

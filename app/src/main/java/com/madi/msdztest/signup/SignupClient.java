@@ -18,6 +18,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -25,8 +27,14 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.madi.msdztest.R;
 import com.madi.msdztest.login.Login;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class SignupClient extends Fragment {
 
@@ -36,9 +44,6 @@ public class SignupClient extends Fragment {
         // Required empty public constructor
     }
 
-    public static SignupClient newInstance() {
-        return new SignupClient();
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -115,15 +120,39 @@ public class SignupClient extends Fragment {
 
     private void registerUser(String textNom, String textPrenom, String textEmail, String textNumeroTlfn, String textMdp, String textReMdp) {
         FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
         auth.createUserWithEmailAndPassword(textEmail, textMdp).addOnCompleteListener((Activity) getContext(), new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    Toast.makeText(getContext(), "Votre compte est créer avec succés", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(),"Votre compte est créer avec succés",Toast.LENGTH_LONG).show();
                     FirebaseUser firebaseUser = auth.getCurrentUser();
 
 
                     firebaseUser.sendEmailVerification();
+
+                    String userId = firebaseUser.getUid();
+                    CollectionReference usersCollection = db.collection("clients");
+                    DocumentReference userDocument = usersCollection.document(userId);
+
+                    Map<String, Object> user = new HashMap<>();
+                    user.put("Nom", textNom);
+                    user.put("Prénom", textPrenom);
+                    user.put("Email", textEmail);
+                    user.put("Numero de téléphone", textNumeroTlfn);
+                    user.put("Mot de passe", textMdp);
+                    userDocument.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            Log.d(TAG,"Votre compte est créer avec succés");
+                        }
+                    })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.w(TAG,"Erreur !", e);
+                                }
+                            });
 
                     Intent intent = new Intent(getContext(), Login.class);
                     startActivity(intent);

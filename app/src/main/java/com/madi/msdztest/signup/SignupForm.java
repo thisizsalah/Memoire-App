@@ -55,6 +55,5 @@ public class SignupForm extends AppCompatActivity {
             }
         });
 
-        Toast.makeText(SignupForm.this, "Veuillez rempli le correct Form", Toast.LENGTH_LONG).show();
     }
 }
