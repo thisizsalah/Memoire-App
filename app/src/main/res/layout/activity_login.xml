@@ -60,7 +60,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
-                android:id="@+id/Client_Re_Mdp"
+                android:id="@+id/inputEmail"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="16dp"
@@ -79,7 +79,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
             <EditText
-                android:id="@+id/editTextTextPersonName2"
+                android:id="@+id/inputMdp"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="16dp"
@@ -96,7 +96,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/Client_Re_Mdp" />
+                app:layout_constraintTop_toBottomOf="@+id/inputEmail" />
 
 
             <TextView
@@ -109,10 +109,10 @@
                 android:textColor="@color/blue"
                 android:textSize="10sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName2" />
+                app:layout_constraintTop_toBottomOf="@+id/inputMdp" />
 
             <Button
-                android:id="@+id/button2"
+                android:id="@+id/buttonConnecter"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -130,7 +130,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName2" />
+                app:layout_constraintTop_toBottomOf="@+id/inputMdp" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -142,7 +142,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/button2">
+                app:layout_constraintTop_toBottomOf="@+id/buttonConnecter">
 
                 <TextView
                     android:id="@+id/textView8"

@@ -35,6 +35,8 @@ import com.madi.msdztest.login.Login;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class SignupClient extends Fragment {
 
@@ -54,7 +56,7 @@ public class SignupClient extends Fragment {
         ClientEmail = view.findViewById(R.id.Client_Email);
         ClientNumeroTlf = view.findViewById(R.id.Client_Numero_Tlf);
         ClientMdp = view.findViewById(R.id.Client_Mdp);
-        ClientReMdp = view.findViewById(R.id.Client_Re_Mdp);
+        ClientReMdp = view.findViewById(R.id.inputEmail);
         Button BtnCreer = view.findViewById(R.id.Button_Creer_Compte);
         BtnCreer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,6 +67,12 @@ public class SignupClient extends Fragment {
                 String textNumeroTlf = ClientNumeroTlf.getText().toString();
                 String textMdp = ClientMdp.getText().toString();
                 String textReMdp = ClientReMdp.getText().toString();
+
+                String NumeroX = "[0][5-7][0-9]{8}";
+                Matcher NumeroMatcher;
+                Pattern NumeroPattern = Pattern.compile(NumeroX);
+                NumeroMatcher = NumeroPattern.matcher(textNumeroTlf);
+
                 if (TextUtils.isEmpty(textNom)) {
                     Toast.makeText(getContext(), "Veuillez entrer votre Nom !", Toast.LENGTH_SHORT).show();
                     ClientNom.setError("Nom est obligatoire");
@@ -90,6 +98,11 @@ public class SignupClient extends Fragment {
                     Toast.makeText(getContext(), "Veuillez re-entrer votre Numéro de téléphone !", Toast.LENGTH_SHORT).show();
                     ClientNumeroTlf.setError("Numéro de téléphone doit comporter 10 chiffres");
                     ClientNumeroTlf.requestFocus();
+
+                }else if (!NumeroMatcher.find()) {
+                        Toast.makeText(getContext(), "Veuillez entrer votre Numéro de téléphone !", Toast.LENGTH_SHORT).show();
+                        ClientNumeroTlf.setError("Numéro de téléphone invalide");
+                        ClientNumeroTlf.requestFocus();
                 } else if (TextUtils.isEmpty(textMdp)) {
                     Toast.makeText(getContext(), "Veuillez entrer votre mot de passe !", Toast.LENGTH_SHORT).show();
                     ClientMdp.setError("mot de passe est obligatoire");
@@ -110,7 +123,7 @@ public class SignupClient extends Fragment {
                     ClientMdp.clearComposingText();
                     ClientReMdp.clearComposingText();
                 } else {
-                    registerUser(textNom, textPrenom, textEmail, textNumeroTlf, textMdp, textReMdp);
+                    registerUser(textNom, textPrenom, textEmail, textNumeroTlf, textMdp);
 
                 }
             }
@@ -118,7 +131,7 @@ public class SignupClient extends Fragment {
         return view;
     }
 
-    private void registerUser(String textNom, String textPrenom, String textEmail, String textNumeroTlfn, String textMdp, String textReMdp) {
+    private void registerUser(String textNom, String textPrenom, String textEmail, String textNumeroTlfn, String textMdp) {
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         auth.createUserWithEmailAndPassword(textEmail, textMdp).addOnCompleteListener((Activity) getContext(), new OnCompleteListener<AuthResult>() {

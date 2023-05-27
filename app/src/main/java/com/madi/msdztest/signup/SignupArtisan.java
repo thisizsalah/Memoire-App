@@ -39,6 +39,8 @@ import com.madi.msdztest.login.Login;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class SignupArtisan extends Fragment {
@@ -104,6 +106,11 @@ public class SignupArtisan extends Fragment {
                 String wilaya = spinnerWilaya.getSelectedItem().toString();
                 String categorie = spinnerCat.getSelectedItem().toString();
 
+                String NumeroX = "[0][5-7][0-9]{8}";
+                Matcher NumeroMatcher;
+                Pattern NumeroPattern = Pattern.compile(NumeroX);
+                NumeroMatcher = NumeroPattern.matcher(textNumeroTlf);
+
                 if (categorie.equals("Catégorie")) {
                     Toast.makeText(getContext(), "Veuillez sélectionner votre catégorie ", Toast.LENGTH_SHORT).show();
                     return;
@@ -129,7 +136,7 @@ public class SignupArtisan extends Fragment {
                     ArtisanEmail.requestFocus();
                 } else if (!Patterns.EMAIL_ADDRESS.matcher(textEmail).matches()) {
                     Toast.makeText(getContext(), "Veuillez re-entrer votre E-mail !", Toast.LENGTH_SHORT).show();
-                    ArtisanEmail.setError("Valider E-mail est obligatoire");
+                    ArtisanEmail.setError("Un email valide est requis");
                     ArtisanEmail.requestFocus();
                 } else if (TextUtils.isEmpty(textNumeroTlf)) {
                     Toast.makeText(getContext(), "Veuillez entrer votre Numéro de téléphone !", Toast.LENGTH_SHORT).show();
@@ -139,7 +146,13 @@ public class SignupArtisan extends Fragment {
                     Toast.makeText(getContext(), "Veuillez re-entrer votre Numéro de téléphone !", Toast.LENGTH_SHORT).show();
                     ArtisanNumeroTlf.setError("Numéro de téléphone doit comporter 10 chiffres");
                     ArtisanNumeroTlf.requestFocus();
-                } else if (TextUtils.isEmpty(textMdp)) {
+
+                } else if (!NumeroMatcher.find()) {
+                    Toast.makeText(getContext(), "Veuillez entrer votre Numéro de téléphone !", Toast.LENGTH_SHORT).show();
+                    ArtisanNumeroTlf.setError("Numéro de téléphone invalide");
+                    ArtisanNumeroTlf.requestFocus();
+
+            } else if (TextUtils.isEmpty(textMdp)) {
                     Toast.makeText(getContext(), "Veuillez entrer votre mot de passe !", Toast.LENGTH_SHORT).show();
                     ArtisanMdp.setError("mot de passe est obligatoire");
                     ArtisanMdp.requestFocus();
@@ -284,14 +297,14 @@ public class SignupArtisan extends Fragment {
         wilayas.add("46. Aïn Témouchent");
         wilayas.add("47. Ghardaïa");
         wilayas.add("48. Relizane");
-        wilayas.add("49. EL EULMA");
+        wilayas.add("49. Timimoun");
         wilayas.add("50. Bordj Badji Mokhtar");
-        wilayas.add("51. Béni Abbès");
-        wilayas.add("52. Ouled Djellal");
+        wilayas.add("51. Ouled Djellal");
+        wilayas.add("52. Béni Abbès");
         wilayas.add("53. Ain salah");
         wilayas.add("54. Ain guezzam");
-        wilayas.add("55. Djanet");
-        wilayas.add("56. El Mghair");
+        wilayas.add("55. Touggourt");
+        wilayas.add("56. Djanet");
         wilayas.add("57. El Menia");
         wilayas.add("58. Touggourt");
 

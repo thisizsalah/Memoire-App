@@ -100,7 +100,7 @@
             android:textSize="14sp" />
 
         <EditText
-            android:id="@+id/Client_Re_Mdp"
+            android:id="@+id/inputEmail"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginStart="16dp"
