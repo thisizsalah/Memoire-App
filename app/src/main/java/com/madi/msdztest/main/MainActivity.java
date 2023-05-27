@@ -25,9 +25,6 @@ public class  MainActivity extends AppCompatActivity {
                 case R.id.Acceuil:
                     replaceFragement(new HomeFragment());
                     break;
-                case R.id.Messages:
-                    replaceFragement(new MessagesFragment());
-                    break;
                 case R.id.Profile:
                     replaceFragement(new ProfileFragment());
                     break;

@@ -5,10 +5,7 @@
         android:title="Acceuil"
         android:icon="@drawable/ic_home"
         android:id="@+id/Acceuil" />
-    <item
-        android:title="Messages"
-        android:icon="@drawable/ic_messages"
-        android:id="@+id/Messages"/>
+
     <item
         android:title="Profile"
         android:icon="@drawable/ic_profile"
