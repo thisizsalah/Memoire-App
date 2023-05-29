@@ -1,12 +1,19 @@
 package com.madi.msdztest.signup;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.TextUtils;
 import android.util.Log;
@@ -18,6 +25,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -34,6 +42,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.madi.msdztest.R;
+import com.madi.msdztest.RecyclerAdapterCharger;
 import com.madi.msdztest.login.Login;
 
 import java.util.ArrayList;
@@ -45,29 +54,21 @@ import java.util.regex.Pattern;
 
 public class SignupArtisan extends Fragment {
 
-    private EditText ArtisanNom, ArtisanPrenom, ArtisanEmail, ArtisanNumeroTlf, ArtisanMdp, ArtisanReMdp; //Artisan
-    Spinner spinnerWilaya,spinnerCat;
+    private EditText ArtisanNom, ArtisanPrenom, ArtisanEmail, ArtisanNumeroTlf, ArtisanMdp, ArtisanReMdp;
+    Spinner spinnerWilaya, spinnerCat;
+    RecyclerView recyclerView;
+    Button charger;
+    ArrayList<Uri> uri = new ArrayList<>();
+    RecyclerAdapterCharger adapter;
+    private static final int Read_permission = 101;
     private final static String TAG ="SignupArtisan";
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-
-    public SignupArtisan() {
-        // Required empty public constructor
-    }
 
 
-    // TODO: Rename and change types and number of parameters
-    public static SignupArtisan newInstance(String param1, String param2) {
-        SignupArtisan fragment = new SignupArtisan();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+
+
+
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -83,6 +84,30 @@ public class SignupArtisan extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_signup_artisan, container, false);
+
+        recyclerView = view.findViewById(R.id.recycler_view_images);
+        charger = view.findViewById(R.id.btn_charger);
+        adapter = new RecyclerAdapterCharger(uri);
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(),4));
+        recyclerView.setAdapter(adapter);
+
+if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
+    != PackageManager.PERMISSION_GRANTED){
+
+    ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},Read_permission);
+    }
+
+        charger.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE,true);
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent,"Selectionner les images"),1);
+            }
+        });
 
         spinnerWilaya = view.findViewById(R.id.spinner_wilaya);
         spinnerCat = view.findViewById(R.id.spinner_categorie);
@@ -156,7 +181,7 @@ public class SignupArtisan extends Fragment {
                     Toast.makeText(getContext(), "Veuillez entrer votre mot de passe !", Toast.LENGTH_SHORT).show();
                     ArtisanMdp.setError("mot de passe est obligatoire");
                     ArtisanMdp.requestFocus();
-                } else if (textMdp.length() < 6) {
+                } else if (textMdp.length() < 8) {
                     Toast.makeText(getContext(), "Mot de passe doit comporter au moins 6 chiffres", Toast.LENGTH_SHORT).show();
                     ArtisanMdp.setError("Mot de passe trés faible");
                     ArtisanMdp.requestFocus();
@@ -198,15 +223,15 @@ public class SignupArtisan extends Fragment {
                     CollectionReference usersCollection = db.collection("Artisans");
                     DocumentReference userDocument = usersCollection.document(userId);
 
-                    Map<String, Object> user = new HashMap<>();
-                    user.put("Nom", textNom);
-                    user.put("Prénom", textPrenom);
-                    user.put("Email", textEmail);
-                    user.put("Numero de téléphone", textNumeroTlf);
-                    user.put("Mot de passe", textMdp);
-                    user.put("Wilaya", wilaya);
-                    user.put("Catégorie", categorie);
-                    userDocument.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    Map<String, Object> artisan = new HashMap<>();
+                    artisan.put("Nom", textNom);
+                    artisan.put("Prénom", textPrenom);
+                    artisan.put("Email", textEmail);
+                    artisan.put("Numero de téléphone", textNumeroTlf);
+                    artisan.put("Mot de passe", textMdp);
+                    artisan.put("Wilaya", wilaya);
+                    artisan.put("Catégorie", categorie);
+                    userDocument.set(artisan).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void unused) {
                                     Log.d(TAG,"Votre compte est créer avec succés");
@@ -227,7 +252,7 @@ public class SignupArtisan extends Fragment {
                     try {
                         throw task.getException();
                     } catch (FirebaseAuthWeakPasswordException e) {
-                        ArtisanMdp.setError("Votre mot de passe est faible. Veuillez choisir un mot de passe plus fort");
+                        ArtisanMdp.setError("Votre mot de passe doit comporter au moins 8 chiffres");
                         ArtisanMdp.requestFocus();
                     } catch (FirebaseAuthInvalidCredentialsException e){
                         ArtisanEmail.setError("Adresse e-mail invalide. Veuillez entrer un email valide");
@@ -243,9 +268,8 @@ public class SignupArtisan extends Fragment {
             }
         });
     }
-    public void initializeView(View rootView){
 
-    }
+
     public void initSpinnerWilaya() {
         ArrayList<String> wilayas = new ArrayList<String>();
         wilayas.add("Selectionner Wilaya");
@@ -330,6 +354,28 @@ public class SignupArtisan extends Fragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCat.setAdapter(adapter);
 
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1 && resultCode == Activity.RESULT_OK){
+            if (data.getClipData() !=null){
+                int x = data.getClipData().getItemCount();
+
+                for (int i=0;i<x;i++){
+                    uri.add(data.getClipData().getItemAt(i).getUri());
+                }
+                adapter.notifyDataSetChanged();
+
+            } else if (data.getData() != null){
+                String imageURL = data.getData().getPath();
+                uri.add(Uri.parse(imageURL));
+
+            }
+        }
 
     }
 }

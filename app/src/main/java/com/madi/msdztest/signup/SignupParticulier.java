@@ -38,11 +38,11 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class SignupClient extends Fragment {
+public class SignupParticulier extends Fragment {
 
     private EditText ClientNom, ClientPrenom, ClientEmail, ClientNumeroTlf, ClientMdp, ClientReMdp;
-    private static final String TAG="SignupClient";
-    public SignupClient() {
+    private static final String TAG="SignupParticulier";
+    public SignupParticulier() {
         // Required empty public constructor
     }
 
@@ -50,7 +50,7 @@ public class SignupClient extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_signup_client, container, false);
+        View view = inflater.inflate(R.layout.fragment_signup_paticulier, container, false);
         ClientNom = view.findViewById(R.id.Client_Nom);
         ClientPrenom = view.findViewById(R.id.Client_Prenom);
         ClientEmail = view.findViewById(R.id.Client_Email);
@@ -145,7 +145,7 @@ public class SignupClient extends Fragment {
                     firebaseUser.sendEmailVerification();
 
                     String userId = firebaseUser.getUid();
-                    CollectionReference usersCollection = db.collection("clients");
+                    CollectionReference usersCollection = db.collection("Particuliers");
                     DocumentReference userDocument = usersCollection.document(userId);
 
                     Map<String, Object> user = new HashMap<>();

@@ -8,16 +8,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
+public class ArtisanListRecyclerViewAdapter extends RecyclerView.Adapter<ArtisanListRecyclerViewAdapter.MyViewHolder> {
     private final Context context;
     private final ArrayList<ListData> listData;
 
-    public RecyclerViewAdapter(Context context, ArrayList<ListData> listData) {
+    public ArtisanListRecyclerViewAdapter(Context context, ArrayList<ListData> listData) {
         this.context = context;
         this.listData = listData;
     }
@@ -31,7 +30,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerViewAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ArtisanListRecyclerViewAdapter.MyViewHolder holder, int position) {
         holder.tvName.setText(listData.get(position).getName());
         holder.tvCat.setText(listData.get(position).getCategorie());
         holder.tvCity.setText(listData.get(position).getCity());

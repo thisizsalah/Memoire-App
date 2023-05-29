@@ -23,7 +23,7 @@ public class ArtisanProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 FirebaseAuth.getInstance().signOut();
-                Toast.makeText(ArtisanProfileActivity.this,"Déconnecter!",Toast.LENGTH_LONG).show();
+                Toast.makeText(ArtisanProfileActivity.this,"Déconnecté!",Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(ArtisanProfileActivity.this, Login.class);
                 startActivity(intent);
             }

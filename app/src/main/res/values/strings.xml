@@ -5,9 +5,12 @@
     <string name="rechercher">Rechercher</string>
     <string name="plomberie">Plomberie</string>
     <string name="climatisation">Climatisation</string>
+    <string name="description">Je suis un technicien plombier d\'installation et réparation de toutes les problèmes.
+    N\'hésitez pas à me demander je suis disponible 7/7j et j\'accepte le déplacement a domicile.</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="creez_un_compte">Créez un compte</string>
+    <string name="creez_un_compte">Créer un compte</string>
 
     <string-array name="items_name">
         <item>houcine Seffari</item>

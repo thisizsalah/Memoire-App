@@ -124,8 +124,8 @@ public class Login extends AppCompatActivity {
                         startActivity(artisanIntent);
                         finish();
                     } else {
-                        // User is not an artisan, check the "Clients" collection
-                        DocumentReference clientRef = db.collection("clients").document(userId);
+                        // User is not an artisan, check the "Particuliers" collection
+                        DocumentReference clientRef = db.collection("Particuliers").document(userId);
                         clientRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                             @Override
                             public void onComplete(@NonNull Task<DocumentSnapshot> task) {

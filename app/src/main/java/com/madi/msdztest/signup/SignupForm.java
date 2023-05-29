@@ -22,7 +22,7 @@ public class SignupForm extends AppCompatActivity {
         tabLayout = findViewById(R.id.tabLayout);
         viewPager2 = findViewById(R.id.viewPager2);
 
-        tabLayout.addTab(tabLayout.newTab().setText("Client"));
+        tabLayout.addTab(tabLayout.newTab().setText("Particulier"));
         tabLayout.addTab(tabLayout.newTab().setText("Artisan"));
 
 

@@ -20,7 +20,7 @@ public class ListActivity extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.mRecyclerView);
         setListData();
 
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, listData);
+        ArtisanListRecyclerViewAdapter adapter = new ArtisanListRecyclerViewAdapter(this, listData);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }

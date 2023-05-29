@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".signup.SignupClient">
+    tools:context=".signup.SignupParticulier">
 
     <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
         <LinearLayout
             android:id="@+id/linearLayout2"
@@ -134,6 +134,37 @@
                 android:layout_marginEnd="128dp"
                 android:contentDescription="spinner"
                 android:background="@drawable/spinner_bkg"/>
+
+            <TextView
+                android:id="@+id/textView13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Charger les images de votre travail"
+                android:layout_gravity="center"
+                android:layout_marginTop="24dp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="14sp" />
+            <Button
+                android:id="@+id/btn_charger"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:text="Charger images"
+                android:layout_margin="12dp"
+                android:textSize="12sp"
+                android:textAllCaps="false"
+                android:layout_gravity="center"
+                android:background="@drawable/button_commencer"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:padding="4dp"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_images"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="12sp"
+                android:background="@color/white" />
 
 
         </LinearLayout>
