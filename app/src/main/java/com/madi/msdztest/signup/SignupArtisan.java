@@ -1,10 +1,13 @@
 package com.madi.msdztest.signup;
 
+import static android.app.Activity.RESULT_OK;
+
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -25,7 +28,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -44,6 +46,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.madi.msdztest.R;
 import com.madi.msdztest.RecyclerAdapterCharger;
 import com.madi.msdztest.login.Login;
+import com.madi.msdztest.managers.FirebaseStorageManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -61,6 +64,9 @@ public class SignupArtisan extends Fragment {
     ArrayList<Uri> uri = new ArrayList<>();
     RecyclerAdapterCharger adapter;
     private static final int Read_permission = 101;
+    private static final int PICK_IMAGE = 1;
+
+
     private final static String TAG ="SignupArtisan";
 
 
@@ -87,25 +93,29 @@ public class SignupArtisan extends Fragment {
 
         recyclerView = view.findViewById(R.id.recycler_view_images);
         charger = view.findViewById(R.id.btn_charger);
-        adapter = new RecyclerAdapterCharger(uri);
+        adapter = new RecyclerAdapterCharger(uri,getContext());
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(),4));
         recyclerView.setAdapter(adapter);
 
-if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
-    != PackageManager.PERMISSION_GRANTED){
 
-    ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},Read_permission);
-    }
 
         charger.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED){
 
-                Intent intent = new Intent();
+                    ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},Read_permission);
+                    return;
+                }
+
+            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                 intent.setType("image/*");
-                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE,true);
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent,"Selectionner les images"),1);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
+                    intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE,true);
+
+                }
+                startActivityForResult(Intent.createChooser(intent,"Selectionner les images"),PICK_IMAGE);
             }
         });
 
@@ -138,7 +148,7 @@ if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXT
 
                 if (categorie.equals("Catégorie")) {
                     Toast.makeText(getContext(), "Veuillez sélectionner votre catégorie ", Toast.LENGTH_SHORT).show();
-                    return;
+
                 }
                 else if (wilaya.equals("Selectionner Wilaya")) {
                     Toast.makeText(getContext(), "Veuillez sélectionner votre wilaya !", Toast.LENGTH_SHORT).show();
@@ -196,14 +206,39 @@ if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXT
 
                     ArtisanMdp.clearComposingText();
                     ArtisanReMdp.clearComposingText();
+                } else if( uri.size() == 0){
+                    Toast.makeText(getContext(), "Veuillez selectionner aumoins une images !", Toast.LENGTH_SHORT).show();
+
                 } else {
                     registerUser(textNom, textPrenom, textEmail, textNumeroTlf, textMdp,wilaya,categorie);
-
                 }
             }
         });
 
         return view;
+    }
+    public void uploadImagesToFirestore(){
+        FirebaseStorageManager storageManager = new FirebaseStorageManager();
+        storageManager.uploadImages(uri.toArray(new Uri[uri.size()]), new FirebaseStorageManager.UploadCallback() {
+            @Override
+            public void onUploadProgress(int progress) {}
+
+            @Override
+            public void onUploadComplete() {
+                Log.i("upload","done");
+                Intent intent = new Intent(getContext(), Login.class);
+                startActivity(intent);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+
+            }
+
+            @Override
+            public void onUploadFailure(Exception e) {
+                Log.i("upload","failed " + e.getMessage());
+
+            }
+        });
+
     }
     private void registerUser(String textNom, String textPrenom, String textEmail, String textNumeroTlf, String textMdp, String wilaya, String categorie) {
         FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -231,10 +266,12 @@ if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXT
                     artisan.put("Mot de passe", textMdp);
                     artisan.put("Wilaya", wilaya);
                     artisan.put("Catégorie", categorie);
+
                     userDocument.set(artisan).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void unused) {
                                     Log.d(TAG,"Votre compte est créer avec succés");
+                                    uploadImagesToFirestore();
                                 }
                             })
                             .addOnFailureListener(new OnFailureListener() {
@@ -244,9 +281,6 @@ if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXT
                                 }
                             });
 
-                    Intent intent = new Intent(getContext(), Login.class);
-                    startActivity(intent);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 }
                 else {
                     try {
@@ -361,20 +395,25 @@ if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXT
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == 1 && resultCode == Activity.RESULT_OK){
+        if (requestCode == 1 && resultCode == RESULT_OK && null != data){
             if (data.getClipData() !=null){
-                int x = data.getClipData().getItemCount();
+                int countOfImages = data.getClipData().getItemCount();
 
-                for (int i=0;i<x;i++){
-                    uri.add(data.getClipData().getItemAt(i).getUri());
+                for (int i=0;i<countOfImages;i++){
+                    Uri imageuri = data.getClipData().getItemAt(i).getUri();
+                    uri.add(imageuri);
                 }
                 adapter.notifyDataSetChanged();
 
-            } else if (data.getData() != null){
-                String imageURL = data.getData().getPath();
-                uri.add(Uri.parse(imageURL));
 
+            } else {
+
+                Uri imageuri = data.getData();
+                uri.add(imageuri);
             }
+            adapter.notifyDataSetChanged();
+        } else {
+            Toast.makeText(getContext(),"You haven't pick any image",Toast.LENGTH_LONG).show();
         }
 
     }

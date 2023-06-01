@@ -12,20 +12,13 @@ import android.widget.ImageView;
 
 import com.madi.msdztest.ListActivity;
 import com.madi.msdztest.R;
+import com.madi.msdztest.models.Category;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link HomeFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class HomeFragment extends Fragment {
+    ImageView plombier, peintre, macon, electricien, soudeur ,install_prbl, reparation_toit, climatisation, Demenagement;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
 
 
     public HomeFragment() {
@@ -33,15 +26,7 @@ public class HomeFragment extends Fragment {
     }
 
 
-    // TODO: Rename and change types and number of parameters
-    public static HomeFragment newInstance(String param1, String param2) {
-        HomeFragment fragment = new HomeFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -55,15 +40,33 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
 
-        ImageView imageView = rootView.findViewById(R.id.ic_plombier);
-        imageView.setOnClickListener(new View.OnClickListener() {
+        plombier = rootView.findViewById(R.id.ic_plombier);
+        peintre = rootView.findViewById(R.id.ic_peintre);
+        macon = rootView.findViewById(R.id.ic_maçon);
+        electricien = rootView.findViewById(R.id.ic_electricien);
+        soudeur = rootView.findViewById(R.id.ic_soudeur);
+        install_prbl = rootView.findViewById(R.id.ic_parabole);
+        reparation_toit = rootView.findViewById(R.id.ic_toit);
+        climatisation = rootView.findViewById(R.id.ic_climat);
+        Demenagement = rootView.findViewById(R.id.ic_demenagement);
+
+
+        plombier.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), ListActivity.class);
+                intent.putExtra("category", Category.cat_plombier);
                 startActivity(intent);
             }
         });
-
+        peintre.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), ListActivity.class);
+                intent.putExtra("category", Category.cat_peintre);
+                startActivity(intent);
+            }
+        });
 
     return rootView;
     }

@@ -4,33 +4,50 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
+
+import com.madi.msdztest.managers.FirestoreManager;
+import com.madi.msdztest.models.Artisan;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ListActivity extends AppCompatActivity {
- ArrayList<ListData> listData = new ArrayList<>();
- int[] listimages = {R.drawable.pic1,R.drawable.pic2,R.drawable.pic3,R.drawable.pic4,R.drawable.pic5,R.drawable.pic6,R.drawable.pic7};
-
+    List<Artisan> listData = new ArrayList<>();
+    RecyclerView recyclerView;
+    ArtisanListRecyclerViewAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
-
-        RecyclerView recyclerView = findViewById(R.id.mRecyclerView);
-        setListData();
-
-        ArtisanListRecyclerViewAdapter adapter = new ArtisanListRecyclerViewAdapter(this, listData);
+        recyclerView = findViewById(R.id.mRecyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(ListActivity.this));
+        adapter = new ArtisanListRecyclerViewAdapter( ListActivity.this,  listData);
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-    }
-    private void setListData(){
-      String[] plombierNames = getResources().getStringArray(R.array.items_name);
-      String[] plomierPlombier = getResources().getStringArray(R.array.items_cat);
-      String[] plombierCity = getResources().getStringArray(R.array.items_city);
-      for  (int i=0; i<plombierNames.length;i++){
-          listData.add(new ListData(plombierNames[i],plomierPlombier[i],plombierCity[i],listimages[i] ));
 
-      }
+        String category = getIntent().getStringExtra("category");
+
+        setListData(category);
+    }
+    private void setListData(String category){
+        FirestoreManager firestoreManager = new FirestoreManager();
+        firestoreManager.getArtisansByCategory(category, new FirestoreManager.GetArtisansCallback() {
+            @Override
+            public void onSuccess(List<Artisan> artisans) {
+                // Handle successful retrieval of artisans
+                Log.i("artisans",artisans.toString());
+                listData.addAll(artisans);
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                // Handle failure
+                e.printStackTrace();
+            }
+        });
+
     }
 }

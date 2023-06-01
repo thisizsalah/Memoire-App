@@ -1,5 +1,6 @@
 package com.madi.msdztest;
 
+import android.content.Context;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,14 +10,21 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 
 public class RecyclerAdapterCharger extends RecyclerView.Adapter<RecyclerAdapterCharger.ViewHolder> {
 
     private ArrayList<Uri> uriArrayList;
+    private Context context;
 
-    public RecyclerAdapterCharger(ArrayList<Uri> uriArrayList) {
+
+
+    public RecyclerAdapterCharger(ArrayList<Uri> uriArrayList, Context context) {
         this.uriArrayList = uriArrayList;
+        this.context = context;
+
     }
 
     @NonNull
@@ -31,8 +39,7 @@ public class RecyclerAdapterCharger extends RecyclerView.Adapter<RecyclerAdapter
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerAdapterCharger.ViewHolder holder, int position) {
-        holder.imageView.setImageURI(uriArrayList.get(position));
-
+        Glide.with(context).load(uriArrayList.get(position)).into(holder.imageView);
     }
 
     @Override
