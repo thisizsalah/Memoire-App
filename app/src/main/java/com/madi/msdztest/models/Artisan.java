@@ -1,14 +1,22 @@
 package com.madi.msdztest.models;
 
 
-import android.net.Uri;
-
 import java.util.List;
 
 public class Artisan {
     private String Catégorie;
     private String Email;
     private String Nom;
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    private String imageUrl;
 
     public void setCatégorie(String catégorie) {
         Catégorie = catégorie;
@@ -49,15 +57,8 @@ public class Artisan {
     private String Description;
     private List<String> Images;
 
-    public Uri getUri() {
-        return uri;
-    }
 
-    public void setUri(Uri uri) {
-        this.uri = uri;
-    }
 
-    private Uri uri;
 
     private String key;
 
@@ -65,7 +66,7 @@ public class Artisan {
         // Required empty constructor for Firestore serialization
     }
 
-    public Artisan(String catégorie, String email, String nom, String telephone, String prénom, String wilaya, String description, List<String> images,Uri uri) {
+    public Artisan(String catégorie, String email, String nom, String telephone, String prénom, String wilaya, String description, List<String> images, String imageUrl) {
         this.Catégorie = catégorie;
         this.Email = email;
         this.Nom = nom;
@@ -73,8 +74,8 @@ public class Artisan {
         this.Prénom = prénom;
         this.Wilaya = wilaya;
         this.Images = images;
-        this.uri = uri;
         this.Description = description;
+        this.imageUrl = imageUrl;
     }
 
     public String getKey() {

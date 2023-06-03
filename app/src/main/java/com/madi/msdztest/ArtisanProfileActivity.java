@@ -19,6 +19,7 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.madi.msdztest.login.Login;
+import com.squareup.picasso.Picasso;
 
 public class ArtisanProfileActivity extends AppCompatActivity {
     private TextView textViewFullName, textViewNom, textViewPrenom, textViewEmail, textViewNumeroTlf, textViewCategorie;
@@ -50,8 +51,10 @@ public class ArtisanProfileActivity extends AppCompatActivity {
         documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-
-
+                String imageUrl = value.getString("imgProfile");
+                if (imageUrl != null) {
+                    Picasso.get().load(imageUrl).into(imageView);
+                }
                 textViewFullName.setText(value.getString("Nom") +" " + value.getString("Prénom"));
                 textViewNom.setText(value.getString("Nom"));
                 textViewPrenom.setText(value.getString("Prénom"));

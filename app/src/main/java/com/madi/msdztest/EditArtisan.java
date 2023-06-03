@@ -46,8 +46,9 @@ public class EditArtisan extends AppCompatActivity {
     FirebaseFirestore db =FirebaseFirestore.getInstance();
 
     FirebaseUser currentUser = auth.getCurrentUser();
+    Uri imgProfile;
+
     private String userId = currentUser.getUid();
-    DocumentReference documentReference;
     ImageView imageView;
     private static final int REQUEST_IMAGE_PICK = 1;
 
@@ -83,7 +84,6 @@ public class EditArtisan extends AppCompatActivity {
         firestoreManager.getArtisansByID(userId, new FirestoreManager.GetArtisanByIdCallback() {
             @Override
             public void onSuccess(Artisan artisan) {
-
                 ArtisanNom.setText(artisan.getNom());
                 ArtisanPrenom.setText(artisan.getPrénom());
                 ArtisanEmail.setText(artisan.getEmail());
@@ -103,7 +103,6 @@ public class EditArtisan extends AppCompatActivity {
         Save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
 
 
                 String textNom = ArtisanNom.getText().toString();
@@ -191,6 +190,7 @@ public class EditArtisan extends AppCompatActivity {
         artisan.put("Telephone", textTelephone);
         artisan.put("Email", textEmail);
         artisan.put("Description", textDescription);
+        artisan.put("imgProfile",imgProfile);
 
         userDocument.update(artisan).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
@@ -256,9 +256,10 @@ public class EditArtisan extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == REQUEST_IMAGE_PICK && resultCode == RESULT_OK && data != null) {
-            Uri imageUri = data.getData();
-            imageView.setImageURI(imageUri);
+            Uri imgProfile = data.getData();
+            imageView.setImageURI(imgProfile);
         }
+
     }
 
 
