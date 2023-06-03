@@ -262,7 +262,7 @@ public class SignupArtisan extends Fragment {
                     artisan.put("Nom", textNom);
                     artisan.put("Prénom", textPrenom);
                     artisan.put("Email", textEmail);
-                    artisan.put("Numero de téléphone", textNumeroTlf);
+                    artisan.put("Telephone", textNumeroTlf);
                     artisan.put("Mot de passe", textMdp);
                     artisan.put("Wilaya", wilaya);
                     artisan.put("Catégorie", categorie);

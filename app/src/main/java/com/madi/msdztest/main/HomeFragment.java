@@ -16,7 +16,7 @@ import com.madi.msdztest.models.Category;
 
 
 public class HomeFragment extends Fragment {
-    ImageView plombier, peintre, macon, electricien, soudeur ,install_prbl, reparation_toit, climatisation, Demenagement;
+    ImageView plombier, peintre, macon, electricien, soudeur ,install_prbl, reparation_toit, climatisation, demenagement;
 
 
 
@@ -48,7 +48,7 @@ public class HomeFragment extends Fragment {
         install_prbl = rootView.findViewById(R.id.ic_parabole);
         reparation_toit = rootView.findViewById(R.id.ic_toit);
         climatisation = rootView.findViewById(R.id.ic_climat);
-        Demenagement = rootView.findViewById(R.id.ic_demenagement);
+        demenagement = rootView.findViewById(R.id.ic_demenagement);
 
 
         plombier.setOnClickListener(new View.OnClickListener() {
@@ -64,6 +64,62 @@ public class HomeFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), ListActivity.class);
                 intent.putExtra("category", Category.cat_peintre);
+                startActivity(intent);
+            }
+        });
+        macon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), ListActivity.class);
+                intent.putExtra("category", Category.cat_maçon);
+                startActivity(intent);
+            }
+        });
+        electricien.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), ListActivity.class);
+                intent.putExtra("category", Category.cat_electricien);
+                startActivity(intent);
+            }
+        });
+        soudeur.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), ListActivity.class);
+                intent.putExtra("category", Category.cat_soudeur);
+                startActivity(intent);
+            }
+        });
+        install_prbl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), ListActivity.class);
+                intent.putExtra("category", Category.cat_parabole);
+                startActivity(intent);
+            }
+        });
+        reparation_toit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), ListActivity.class);
+                intent.putExtra("category", Category.cat_toit);
+                startActivity(intent);
+            }
+        });
+        climatisation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), ListActivity.class);
+                intent.putExtra("category", Category.cat_climat);
+                startActivity(intent);
+            }
+        });
+        demenagement.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), ListActivity.class);
+                intent.putExtra("category", Category.cat_demenagement);
                 startActivity(intent);
             }
         });

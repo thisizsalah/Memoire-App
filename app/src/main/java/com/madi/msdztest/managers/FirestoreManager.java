@@ -1,8 +1,5 @@
 package com.madi.msdztest.managers;
 
-import android.content.Intent;
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -14,9 +11,6 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.madi.msdztest.ArtisanProfileActivity;
-import com.madi.msdztest.login.Login;
-import com.madi.msdztest.main.MainActivity;
 import com.madi.msdztest.models.Artisan;
 
 import java.util.ArrayList;
@@ -128,7 +122,11 @@ public class FirestoreManager {
         Map<String, Object> artisan = new HashMap<>();
         artisan.put("Nom", artisanObj.getNom());
         artisan.put("Prénom", artisanObj.getPrénom());
+        artisan.put("Telephone", artisanObj.getTelephone());
         artisan.put("Email", artisanObj.getEmail());
+        artisan.put("Description", artisanObj.getDescription());
+
+
         userDocument.update(artisan).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {

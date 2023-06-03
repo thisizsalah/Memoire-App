@@ -98,10 +98,10 @@ public class Login extends AppCompatActivity {
 
                         if (errorCode.equals("ERROR_USER_NOT_FOUND")) {
                             // User does not exist
-                            Toast.makeText(Login.this, "Utilisateur introuvable.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Login.this, "Utilisateur introuvable! Veuillez vérifier vos informations", Toast.LENGTH_SHORT).show();
                         }
                     } else {
-                        Toast.makeText(Login.this, "Échec de la connexion! veuillez vérifier vos informations ", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Login.this, "Échec de la connexion! Veuillez vérifier vos informations ", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
