@@ -94,7 +94,7 @@ public class SignupArtisan extends Fragment {
         recyclerView = view.findViewById(R.id.recycler_view_images);
         charger = view.findViewById(R.id.btn_charger);
         adapter = new RecyclerAdapterCharger(uri,getContext());
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(),4));
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
         recyclerView.setAdapter(adapter);
 
 

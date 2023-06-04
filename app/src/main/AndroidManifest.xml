@@ -14,13 +14,15 @@
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_logo"
         android:label="@string/app_name"
-        android:largeHeap="true"
-        android:supportsRtl="true"
         android:theme="@style/Theme.MSDZTest"
         tools:targetApi="31">
         <activity
+            android:name=".EditParticulier"
+            android:exported="false" />
+        <activity
             android:name=".EditArtisan"
             android:exported="false" />
+
         <activity
             android:name=".SelectedArtisanActivity"
             android:exported="false" />

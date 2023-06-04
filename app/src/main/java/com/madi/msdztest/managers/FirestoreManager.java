@@ -12,6 +12,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.madi.msdztest.models.Artisan;
+import com.madi.msdztest.models.Particulier;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -110,33 +111,27 @@ public class FirestoreManager {
                 });
     }
 
-    public interface SaveCallback {
-        void userSaved();
+
+
+
+    public interface GetParticulierByIdCallback {
+        void onSuccess(Particulier particulier);
+        void onFailure(Exception e);
     }
-    public void saveArtisanData(String userId,Artisan artisanObj ,SaveCallback callback ){
+
+    public void getParticuliersByID(String userId, GetParticulierByIdCallback callback) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-        CollectionReference usersCollection = db.collection("Artisans");
-        DocumentReference userDocument = usersCollection.document(userId);
-
-        Map<String, Object> artisan = new HashMap<>();
-        artisan.put("Nom", artisanObj.getNom());
-        artisan.put("Prénom", artisanObj.getPrénom());
-        artisan.put("Telephone", artisanObj.getTelephone());
-        artisan.put("Email", artisanObj.getEmail());
-        artisan.put("Description", artisanObj.getDescription());
-
-
-        userDocument.update(artisan).addOnSuccessListener(new OnSuccessListener<Void>() {
+        db.collection("Particuliers").document(userId)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
-                    public void onSuccess(Void unused) {
-                       callback.userSaved();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-
+                    public void onComplete(Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            Particulier particulier = task.getResult().toObject(Particulier.class);
+                            callback.onSuccess(particulier);
+                        } else {
+                            callback.onFailure(task.getException());
+                        }
                     }
                 });
     }

@@ -8,15 +8,15 @@ public class Artisan {
     private String Email;
     private String Nom;
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getImageProfile() {
+        return imageProfile;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setImageProfile(String imageProfile) {
+        this.imageProfile = imageProfile;
     }
 
-    private String imageUrl;
+    private String imageProfile;
 
     public void setCatégorie(String catégorie) {
         Catégorie = catégorie;
@@ -66,7 +66,7 @@ public class Artisan {
         // Required empty constructor for Firestore serialization
     }
 
-    public Artisan(String catégorie, String email, String nom, String telephone, String prénom, String wilaya, String description, List<String> images, String imageUrl) {
+    public Artisan(String catégorie, String email, String nom, String telephone, String prénom, String wilaya, String description, List<String> images, String imageProfile) {
         this.Catégorie = catégorie;
         this.Email = email;
         this.Nom = nom;
@@ -75,7 +75,7 @@ public class Artisan {
         this.Wilaya = wilaya;
         this.Images = images;
         this.Description = description;
-        this.imageUrl = imageUrl;
+        this.imageProfile = imageProfile;
     }
 
     public String getKey() {

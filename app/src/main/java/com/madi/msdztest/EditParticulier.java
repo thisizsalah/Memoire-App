@@ -5,6 +5,8 @@ import static android.content.ContentValues.TAG;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -28,20 +30,21 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.madi.msdztest.login.Login;
+import com.madi.msdztest.main.MainActivity;
+import com.madi.msdztest.main.ProfileFragment;
 import com.madi.msdztest.managers.FirebaseStorageManager;
 import com.madi.msdztest.managers.FirestoreManager;
-import com.madi.msdztest.models.Artisan;
-import com.squareup.picasso.Picasso;
+import com.madi.msdztest.models.Particulier;
 
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class EditArtisan extends AppCompatActivity {
-    private EditText ArtisanNom, ArtisanPrenom, ArtisanEmail, ArtisanTelphone, ArtisanDescription;
+public class EditParticulier extends AppCompatActivity {
+    private EditText ParticulierNom, ParticulierPrenom, ParticulierEmail, ParticulierTelphone;
     Button Upload_image, Save,Delete;
+
     Uri imgProfile;
 
     FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -53,19 +56,15 @@ public class EditArtisan extends AppCompatActivity {
     ImageView imageView;
     private static final int REQUEST_IMAGE_PICK = 1;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_artisan);
+        setContentView(R.layout.activity_edit_particulier);
 
-
-        ArtisanNom = findViewById(R.id.EditArtisanNom);
-        ArtisanPrenom = findViewById(R.id.EditArtisanPrenom);
-        ArtisanEmail = findViewById(R.id.EditArtisanEmail);
-        ArtisanTelphone = findViewById(R.id.EditArtisanNumeroTlf);
-        ArtisanDescription = findViewById(R.id.EditArtisanDescription);
+        ParticulierNom = findViewById(R.id.EditParticulierNom);
+        ParticulierPrenom = findViewById(R.id.EditParticulierPrenom);
+        ParticulierEmail = findViewById(R.id.EditParticulierEmail);
+        ParticulierTelphone = findViewById(R.id.EditParticulierNumeroTlf);
         imageView = findViewById(R.id.EditImageView);
         Upload_image =findViewById(R.id.upload_button);
         Save = findViewById(R.id.Button_Sauvegarder);
@@ -80,41 +79,37 @@ public class EditArtisan extends AppCompatActivity {
             }
         });
 
+
         FirestoreManager firestoreManager = new FirestoreManager();
-        firestoreManager.getArtisansByID(userId, new FirestoreManager.GetArtisanByIdCallback() {
+        firestoreManager.getParticuliersByID(userId, new FirestoreManager.GetParticulierByIdCallback() {
             @Override
-            public void onSuccess(Artisan artisan) {
-                Uri uri = Uri.parse(artisan.getImageProfile());
+            public void onSuccess(Particulier particulier) {
+                Uri uri = Uri.parse(particulier.getImageProfile());
                 if (uri != null) {
-                    Glide.with(EditArtisan.this).load(uri).into(imageView);
+                    Glide.with(EditParticulier.this).load(uri).into(imageView);
                 }
-                ArtisanNom.setText(artisan.getNom());
-                ArtisanPrenom.setText(artisan.getPrénom());
-                ArtisanEmail.setText(artisan.getEmail());
-                ArtisanTelphone.setText(artisan.getTelephone());
-                ArtisanDescription.setText(artisan.getDescription());
-
-
-
+                ParticulierNom.setText(particulier.getNom());
+                ParticulierPrenom.setText(particulier.getPrénom());
+                ParticulierEmail.setText(particulier.getEmail());
+                ParticulierTelphone.setText(particulier.getTelephone());
             }
 
             @Override
             public void onFailure(Exception e) {
+                Log.d(TAG, "onFailure: failed edit ",e);
 
             }
-
         });
+
         Save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
 
-                String textNom = ArtisanNom.getText().toString();
-                String textPrenom = ArtisanPrenom.getText().toString();
-                String textEmail = ArtisanEmail.getText().toString();
-                String textTelephone = ArtisanTelphone.getText().toString();
-                String textDescription = ArtisanDescription.getText().toString();
-
+                String textNom = ParticulierNom.getText().toString();
+                String textPrenom = ParticulierPrenom.getText().toString();
+                String textEmail = ParticulierEmail.getText().toString();
+                String textTelephone = ParticulierTelphone.getText().toString();
 
 
                 String NumeroX = "[0][5-7][0-9]{8}";
@@ -125,49 +120,44 @@ public class EditArtisan extends AppCompatActivity {
 
 
                 if (TextUtils.isEmpty(textNom)) {
-                    Toast.makeText(EditArtisan.this, "Veuillez entrer votre Nom !", Toast.LENGTH_SHORT).show();
-                    ArtisanNom.setError("Nom est obligatoire");
-                    ArtisanNom.requestFocus();
+                    Toast.makeText(EditParticulier.this, "Veuillez entrer votre Nom !", Toast.LENGTH_SHORT).show();
+                    ParticulierNom.setError("Nom est obligatoire");
+                    ParticulierNom.requestFocus();
                 } else if (TextUtils.isEmpty(textPrenom)) {
-                    Toast.makeText(EditArtisan.this, "Veuillez entrer votre Prénom !", Toast.LENGTH_SHORT).show();
-                    ArtisanPrenom.setError("Prénom est obligatoire");
-                    ArtisanPrenom.requestFocus();
+                    Toast.makeText(EditParticulier.this, "Veuillez entrer votre Prénom !", Toast.LENGTH_SHORT).show();
+                    ParticulierPrenom.setError("Prénom est obligatoire");
+                    ParticulierPrenom.requestFocus();
 
 
                 } else if (TextUtils.isEmpty(textEmail)) {
-                    Toast.makeText(EditArtisan.this, "Veuillez entrer votre E-mail !", Toast.LENGTH_SHORT).show();
-                    ArtisanEmail.setError("E-mail est obligatoire");
-                    ArtisanEmail.requestFocus();
+                    Toast.makeText(EditParticulier.this, "Veuillez entrer votre E-mail !", Toast.LENGTH_SHORT).show();
+                    ParticulierEmail.setError("E-mail est obligatoire");
+                    ParticulierEmail.requestFocus();
                 } else if (!Patterns.EMAIL_ADDRESS.matcher(textEmail).matches()) {
-                    Toast.makeText(EditArtisan.this, "Veuillez re-entrer votre E-mail !", Toast.LENGTH_SHORT).show();
-                    ArtisanEmail.setError("Un email valide est requis");
-                    ArtisanEmail.requestFocus();
+                    Toast.makeText(EditParticulier.this, "Veuillez re-entrer votre E-mail !", Toast.LENGTH_SHORT).show();
+                    ParticulierEmail.setError("Un email valide est requis");
+                    ParticulierEmail.requestFocus();
                 } else if (TextUtils.isEmpty(textTelephone)) {
-                    Toast.makeText(EditArtisan.this, "Veuillez entrer votre Numéro de téléphone !", Toast.LENGTH_SHORT).show();
-                    ArtisanTelphone.setError("Numéro de téléphone est obligatoire");
-                    ArtisanTelphone.requestFocus();
-                } else if (ArtisanTelphone.length() != 10) {
-                    Toast.makeText(EditArtisan.this, "Veuillez re-entrer votre Numéro de téléphone !", Toast.LENGTH_SHORT).show();
-                    ArtisanTelphone.setError("Numéro de téléphone doit comporter 10 chiffres");
-                    ArtisanTelphone.requestFocus();
+                    Toast.makeText(EditParticulier.this, "Veuillez entrer votre Numéro de téléphone !", Toast.LENGTH_SHORT).show();
+                    ParticulierTelphone.setError("Numéro de téléphone est obligatoire");
+                    ParticulierTelphone.requestFocus();
+                } else if (ParticulierTelphone.length() != 10) {
+                    Toast.makeText(EditParticulier.this, "Veuillez re-entrer votre Numéro de téléphone !", Toast.LENGTH_SHORT).show();
+                    ParticulierTelphone.setError("Numéro de téléphone doit comporter 10 chiffres");
+                    ParticulierTelphone.requestFocus();
 
                 } else if (!NumeroMatcher.find()) {
-                    Toast.makeText(EditArtisan.this, "Veuillez entrer votre Numéro de téléphone !", Toast.LENGTH_SHORT).show();
-                    ArtisanTelphone.setError("Numéro de téléphone invalide");
-                    ArtisanTelphone.requestFocus();
+                    Toast.makeText(EditParticulier.this, "Veuillez entrer votre Numéro de téléphone !", Toast.LENGTH_SHORT).show();
+                    ParticulierTelphone.setError("Numéro de téléphone invalide");
+                    ParticulierTelphone.requestFocus();
 
-                } else if (TextUtils.isEmpty(textDescription)) {
-                    Toast.makeText(EditArtisan.this, "Veuillez entrer une descripton de votre travail !", Toast.LENGTH_SHORT).show();
-                    ArtisanDescription.setError("description est obligatoire");
-                    ArtisanDescription.requestFocus();
-                } else if (ArtisanDescription.length() < 30) {
-                    ArtisanDescription.setError("Votre description est trop courte");
-                    ArtisanDescription.requestFocus();
-                } else {
+                }  else {
 
-                     updatedArtisan(textNom,textPrenom, textEmail, textTelephone, textDescription);
-                    FirebaseStorageManager storageManager = new FirebaseStorageManager();
-                    storageManager.uploadImage(imgProfile, new FirebaseStorageManager.UploadCallback() {
+                    updatedParticulier(textNom, textPrenom, textEmail, textTelephone);
+                    if (imgProfile != null) {
+
+                    FirebaseStorageManager firebaseStorageManager = new FirebaseStorageManager();
+                    firebaseStorageManager.uploadImageParticulier(imgProfile, new FirebaseStorageManager.UploadCallback() {
                         @Override
                         public void onUploadProgress(int progress) {
 
@@ -184,6 +174,8 @@ public class EditArtisan extends AppCompatActivity {
 
                         }
                     });
+                }
+
 
 
 
@@ -192,34 +184,26 @@ public class EditArtisan extends AppCompatActivity {
 
             }
         });
-
-
-
-
-
-
-
-
     }
 
-    private void updatedArtisan(String textNom, String textPrenom, String textEmail, String textTelephone, String textDescription) {
-        CollectionReference usersCollection = db.collection("Artisans");
+    private void updatedParticulier(String textNom, String textPrenom, String textEmail, String textTelephone) {
+
+        CollectionReference usersCollection = db.collection("Particuliers");
         DocumentReference userDocument = usersCollection.document(userId);
 
-        Map<String, Object> artisan = new HashMap<>();
-        artisan.put("Nom",textNom);
-        artisan.put("Prénom", textPrenom);
-        artisan.put("Telephone", textTelephone);
-        artisan.put("Email", textEmail);
-        artisan.put("Description", textDescription);
-
-        userDocument.update(artisan).addOnSuccessListener(new OnSuccessListener<Void>() {
+        Map<String, Object> particulier = new HashMap<>();
+        particulier.put("Nom",textNom);
+        particulier.put("Prénom", textPrenom);
+        particulier.put("Telephone", textTelephone);
+        particulier.put("Email", textEmail);
+        userDocument.update(particulier).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
                 Log.d(TAG, "onSuccess: updated");
-                Toast.makeText(EditArtisan.this,"Profile est à jour",Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(EditArtisan.this, ArtisanProfileActivity.class);
+                Toast.makeText(EditParticulier.this,"Profile est à jour",Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(EditParticulier.this, MainActivity.class);
                 startActivity(intent);
+
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -227,8 +211,8 @@ public class EditArtisan extends AppCompatActivity {
                 Log.d(TAG, "onFailure: ",e);
             }
         });
+    }
 
-                }
 
     public void DeleteProfile(View view) {
         showDialog();
@@ -244,14 +228,14 @@ public class EditArtisan extends AppCompatActivity {
                 CollectionReference usersCollection = db.collection("Artisans");
                 DocumentReference userDocument = usersCollection.document(userId);
                 userDocument.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        Log.d(TAG, "onSuccess: deleted artisan");
-                        Toast.makeText(EditArtisan.this,"Votre Compte est supprimé !",Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(EditArtisan.this, Login.class);
-                        startActivity(intent);
-                    }
-                })
+                            @Override
+                            public void onSuccess(Void unused) {
+                                Log.d(TAG, "onSuccess: deleted particulier");
+                                Toast.makeText(EditParticulier.this,"Votre Compte est supprimé !",Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(EditParticulier.this, Login.class);
+                                startActivity(intent);
+                            }
+                        })
                         .addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
@@ -277,15 +261,11 @@ public class EditArtisan extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == REQUEST_IMAGE_PICK && resultCode == RESULT_OK && data != null) {
-              imgProfile = data.getData();
+            imgProfile = data.getData();
             imageView.setImageURI(imgProfile);
 
         }
 
 
     }
-
-
-
-
 }

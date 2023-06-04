@@ -4,7 +4,7 @@ public class Category {
     public static String cat_plombier = "Plombier";
     public static String cat_peintre = "Peintre";
     public static String cat_maçon = "Maçon";
-    public static String cat_electricien = "Electrien";
+    public static String cat_electricien = "Electricien";
     public static String cat_soudeur = "Soudeur";
     public static String cat_parabole = "Installation Parabole";
     public static String cat_toit = "Réparation de toit";

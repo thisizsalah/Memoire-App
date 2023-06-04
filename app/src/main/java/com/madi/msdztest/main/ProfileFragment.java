@@ -20,8 +20,10 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.madi.msdztest.EditParticulier;
 import com.madi.msdztest.R;
 import com.madi.msdztest.login.Login;
+import com.squareup.picasso.Picasso;
 
 
 public class ProfileFragment extends Fragment {
@@ -58,6 +60,11 @@ public class ProfileFragment extends Fragment {
         documentReference.addSnapshotListener( new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                String imageUrl = value.getString("imageProfile");
+                if (imageUrl != null) {
+                    Picasso.get().load(imageUrl).into(imageView);
+                }
+
                 String name = value.getString("Nom");
                 String prenom = value.getString("Prénom");
                 String fullName = name + " " + prenom;
@@ -66,7 +73,9 @@ public class ProfileFragment extends Fragment {
                 textViewNom.setText(value.getString("Nom"));
                 textViewPrenom.setText(value.getString("Prénom"));
                 textViewEmail.setText(value.getString("Email"));
-                textViewNumeroTlf.setText(value.getString("Numero de téléphone"));
+                String phone = value.getString("Telephone");
+                String formattedNumber = phone.replaceAll("(\\d{2})", "$1 ").trim();
+                textViewNumeroTlf.setText(formattedNumber);
             }
         });
 
@@ -74,7 +83,13 @@ public class ProfileFragment extends Fragment {
 
 
 
-
+        Modifier.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), EditParticulier.class);
+                startActivity(intent);
+            }
+        });
         Logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

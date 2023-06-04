@@ -36,14 +36,14 @@ public class ArtisanListRecyclerViewAdapter extends RecyclerView.Adapter<Artisan
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ArtisanListRecyclerViewAdapter.MyViewHolder holder, int position) {
-        holder.tvName.setText(listData.get(position).getNom() + " " + listData.get(position).getPrénom());
-        holder.tvCat.setText(listData.get(position).getCatégorie());
-        holder.tvCity.setText(listData.get(position).getWilaya());
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int Position) {
+        holder.tvName.setText(listData.get(holder.getAdapterPosition()).getNom() + " " + listData.get(holder.getAdapterPosition()).getPrénom());
+        holder.tvCat.setText(listData.get(holder.getAdapterPosition()).getCatégorie());
+        holder.tvCity.setText(listData.get(holder.getAdapterPosition()).getWilaya());
         //holder.imageView.setImageResource(listData.get(position).getImage());
 
-        if (!listData.get(position).getImages().isEmpty()) {
-            String imageUrl = listData.get(position).getImages().get(0);
+        if ( listData.get(holder.getAdapterPosition()).getImageProfile() != null) {
+            String imageUrl = listData.get(holder.getAdapterPosition()).getImageProfile();
             RequestOptions requestOptions = new RequestOptions()
                     .diskCacheStrategy(DiskCacheStrategy.ALL); // Caches the image
 
@@ -55,7 +55,7 @@ public class ArtisanListRecyclerViewAdapter extends RecyclerView.Adapter<Artisan
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Artisan artisan = listData.get(position);
+                Artisan artisan = listData.get(holder.getAdapterPosition());
                 Intent intent = new Intent(context, SelectedArtisanActivity.class);
                 intent.putExtra("artisan_id",artisan.getKey());
                 context.startActivity(intent);

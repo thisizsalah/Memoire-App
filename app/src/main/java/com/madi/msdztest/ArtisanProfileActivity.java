@@ -51,7 +51,7 @@ public class ArtisanProfileActivity extends AppCompatActivity {
         documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                String imageUrl = value.getString("imgProfile");
+                String imageUrl = value.getString("imageProfile");
                 if (imageUrl != null) {
                     Picasso.get().load(imageUrl).into(imageView);
                 }
@@ -59,7 +59,11 @@ public class ArtisanProfileActivity extends AppCompatActivity {
                 textViewNom.setText(value.getString("Nom"));
                 textViewPrenom.setText(value.getString("Prénom"));
                 textViewEmail.setText(value.getString("Email"));
-                textViewNumeroTlf.setText(value.getString("Telephone"));
+
+
+                String phone = value.getString("Telephone");
+                String formattedNumber = phone.replaceAll("(\\d{2})", "$1 ").trim();
+                textViewNumeroTlf.setText(formattedNumber);
                 textViewCategorie.setText(value.getString("Catégorie"));
 
 
