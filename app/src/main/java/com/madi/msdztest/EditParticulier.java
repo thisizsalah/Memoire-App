@@ -84,10 +84,13 @@ public class EditParticulier extends AppCompatActivity {
         firestoreManager.getParticuliersByID(userId, new FirestoreManager.GetParticulierByIdCallback() {
             @Override
             public void onSuccess(Particulier particulier) {
+                if (particulier.getImageProfile() != null) {
+
                 Uri uri = Uri.parse(particulier.getImageProfile());
                 if (uri != null) {
                     Glide.with(EditParticulier.this).load(uri).into(imageView);
                 }
+            }
                 ParticulierNom.setText(particulier.getNom());
                 ParticulierPrenom.setText(particulier.getPrénom());
                 ParticulierEmail.setText(particulier.getEmail());

@@ -84,17 +84,18 @@ public class EditArtisan extends AppCompatActivity {
         firestoreManager.getArtisansByID(userId, new FirestoreManager.GetArtisanByIdCallback() {
             @Override
             public void onSuccess(Artisan artisan) {
+                if (artisan.getImageProfile() != null) {
+
                 Uri uri = Uri.parse(artisan.getImageProfile());
                 if (uri != null) {
                     Glide.with(EditArtisan.this).load(uri).into(imageView);
                 }
+            }
                 ArtisanNom.setText(artisan.getNom());
                 ArtisanPrenom.setText(artisan.getPrénom());
                 ArtisanEmail.setText(artisan.getEmail());
                 ArtisanTelphone.setText(artisan.getTelephone());
                 ArtisanDescription.setText(artisan.getDescription());
-
-
 
             }
 

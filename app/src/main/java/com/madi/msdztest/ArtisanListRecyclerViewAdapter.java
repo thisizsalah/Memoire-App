@@ -58,6 +58,7 @@ public class ArtisanListRecyclerViewAdapter extends RecyclerView.Adapter<Artisan
                 Artisan artisan = listData.get(holder.getAdapterPosition());
                 Intent intent = new Intent(context, SelectedArtisanActivity.class);
                 intent.putExtra("artisan_id",artisan.getKey());
+                intent.putExtra("artisan_telephone",artisan.getTelephone());
                 context.startActivity(intent);
             }
         });
@@ -76,7 +77,7 @@ public class ArtisanListRecyclerViewAdapter extends RecyclerView.Adapter<Artisan
             super(itemView);
             imageView = itemView.findViewById(R.id.imageView5);
             tvName = itemView.findViewById(R.id.textViewName);
-            tvCat = itemView.findViewById(R.id.textView16);
+            tvCat = itemView.findViewById(R.id.textViewCategorie);
             tvCity = itemView.findViewById(R.id.textView17);
 
 
