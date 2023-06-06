@@ -153,7 +153,6 @@ public class SignupParticulier extends Fragment {
                     user.put("Prénom", textPrenom);
                     user.put("Email", textEmail);
                     user.put("Telephone", textNumeroTlfn);
-                    user.put("Mot de passe", textMdp);
                     userDocument.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void unused) {

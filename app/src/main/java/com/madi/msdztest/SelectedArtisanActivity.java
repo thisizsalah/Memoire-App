@@ -2,6 +2,7 @@ package com.madi.msdztest;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
@@ -19,6 +20,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SelectedArtisanActivity extends AppCompatActivity {
     private FirebaseFirestore fStore;
 
@@ -28,6 +32,7 @@ public class SelectedArtisanActivity extends AppCompatActivity {
     Button Call;
     TextView Nom, Catégorie, Descripton;
     RecyclerView Images;
+    ImagesAdapter imagesAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +50,7 @@ public class SelectedArtisanActivity extends AppCompatActivity {
         if (extras != null) {
             String data = extras.getString("artisan_id");
             String telephone = extras.getString("artisan_telephone");
+            String Fimages = extras.getString("artisan_images");
             fStore = FirebaseFirestore.getInstance();
             DocumentReference documentReference = fStore.collection("Artisans").document(data);
             documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
@@ -73,11 +79,16 @@ public class SelectedArtisanActivity extends AppCompatActivity {
                         }
 
                     });
+                    List<String> images = (List<String>) value.get("images");
+                    if (images != null) {
+                        imagesAdapter = new ImagesAdapter(images);
+                        Images.setLayoutManager(new LinearLayoutManager(SelectedArtisanActivity.this));
+                        Images.setAdapter(imagesAdapter);
+                    }
 
 
                 }
             });
-
 
         }
 

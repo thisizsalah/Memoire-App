@@ -52,7 +52,7 @@ public class EditParticulier extends AppCompatActivity {
 
     FirebaseUser currentUser = auth.getCurrentUser();
 
-    private String userId = currentUser.getUid();
+    private final String userId = currentUser.getUid();
     ImageView imageView;
     private static final int REQUEST_IMAGE_PICK = 1;
 
@@ -199,6 +199,7 @@ public class EditParticulier extends AppCompatActivity {
         particulier.put("Prénom", textPrenom);
         particulier.put("Telephone", textTelephone);
         particulier.put("Email", textEmail);
+        currentUser.updateEmail(textEmail);
         userDocument.update(particulier).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {

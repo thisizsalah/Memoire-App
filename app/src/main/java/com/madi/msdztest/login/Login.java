@@ -22,6 +22,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.madi.msdztest.ArtisanProfileActivity;
+import com.madi.msdztest.ForgotPasswordActivity;
 import com.madi.msdztest.R;
 import com.madi.msdztest.main.MainActivity;
 import com.madi.msdztest.signup.SignupForm;
@@ -30,6 +31,7 @@ import java.util.Objects;
 
 public class Login extends AppCompatActivity {
     private EditText Email, MotDePasse;
+    private TextView Mdp_oublier;
     private FirebaseAuth mAuth;
 
     @Override
@@ -43,10 +45,20 @@ public class Login extends AppCompatActivity {
         Email = findViewById(R.id.inputEmail);
         MotDePasse = findViewById(R.id.inputMdp);
 
+        Mdp_oublier = findViewById(R.id.Mdp_oublier);
+
         mAuth = FirebaseAuth.getInstance();
 
+        Mdp_oublier.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Login.this, ForgotPasswordActivity.class);
+                startActivity(intent);
+            }
+        });
 
-        Button button = findViewById(R.id.buttonConnecter);
+
+        Button button = findViewById(R.id.buttonEnvoyer);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

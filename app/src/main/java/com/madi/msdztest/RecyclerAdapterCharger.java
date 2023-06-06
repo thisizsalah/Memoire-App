@@ -16,8 +16,8 @@ import java.util.ArrayList;
 
 public class RecyclerAdapterCharger extends RecyclerView.Adapter<RecyclerAdapterCharger.ViewHolder> {
 
-    private ArrayList<Uri> uriArrayList;
-    private Context context;
+    private final ArrayList<Uri> uriArrayList;
+    private final Context context;
 
 
 

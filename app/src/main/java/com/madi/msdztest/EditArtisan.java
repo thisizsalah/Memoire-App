@@ -49,7 +49,7 @@ public class EditArtisan extends AppCompatActivity {
 
     FirebaseUser currentUser = auth.getCurrentUser();
 
-    private String userId = currentUser.getUid();
+    private final String userId = currentUser.getUid();
     ImageView imageView;
     private static final int REQUEST_IMAGE_PICK = 1;
 

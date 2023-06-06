@@ -205,7 +205,7 @@
                     app:srcCompat="@drawable/welding" />
 
                 <TextView
-                    android:id="@+id/textView5"
+                    android:id="@+id/Mdp_oublier"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"

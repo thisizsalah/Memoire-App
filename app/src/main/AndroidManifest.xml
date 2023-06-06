@@ -4,7 +4,6 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
-
     <uses-permission
         android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:maxSdkVersion="32" />
@@ -14,19 +13,21 @@
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:hardwareAccelerated="true"
-        android:largeHeap="true"
-        android:supportsRtl="true"
         android:icon="@mipmap/ic_logo"
         android:label="@string/app_name"
+        android:largeHeap="true"
+        android:supportsRtl="true"
         android:theme="@style/Theme.MSDZTest"
         tools:targetApi="31">
+        <activity
+            android:name=".ForgotPasswordActivity"
+            android:exported="false" />
         <activity
             android:name=".EditParticulier"
             android:exported="false" />
         <activity
             android:name=".EditArtisan"
             android:exported="false" />
-
         <activity
             android:name=".SelectedArtisanActivity"
             android:exported="false" />

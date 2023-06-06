@@ -16,8 +16,8 @@ import java.util.Map;
 import java.util.UUID;
 
 public class FirebaseStorageManager {
-    private FirebaseFirestore db;
-    private FirebaseStorage storage;
+    private final FirebaseFirestore db;
+    private final FirebaseStorage storage;
     int uploadedImages = 0;
 
     public FirebaseStorageManager() {
