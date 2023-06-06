@@ -3,6 +3,7 @@ package com.madi.msdztest.login;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -33,13 +34,25 @@ public class Login extends AppCompatActivity {
     private EditText Email, MotDePasse;
     private TextView Mdp_oublier;
     private FirebaseAuth mAuth;
+    private ProgressDialog progressDialog;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Logging in...");
+        progressDialog.setCancelable(false);
+
         TextView textView = findViewById(R.id.CreerCompte);
         mAuth = FirebaseAuth.getInstance();
+
+
+
 
 
         Email = findViewById(R.id.inputEmail);
@@ -58,7 +71,7 @@ public class Login extends AppCompatActivity {
         });
 
 
-        Button button = findViewById(R.id.buttonEnvoyer);
+        Button button = findViewById(R.id.buttonConnecter);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -80,6 +93,7 @@ public class Login extends AppCompatActivity {
                     MotDePasse.requestFocus();
                 } else {
                     loginUser(textEmail, textMdp);
+
                 }
             }
         });
@@ -95,13 +109,19 @@ public class Login extends AppCompatActivity {
     }
 
     private void loginUser(String email, String Mdp) {
+        progressDialog.show();
+
         mAuth.signInWithEmailAndPassword(email, Mdp).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
+                progressDialog.dismiss();
+
                 if (task.isSuccessful()) {
                     Toast.makeText(Login.this, "Bienvenue ! ", Toast.LENGTH_SHORT).show();
                     String userId = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
                     checkUserRole(userId);
+
 
                 } else {
                     // Check the specific error code
@@ -132,6 +152,7 @@ public class Login extends AppCompatActivity {
                     DocumentSnapshot artisanDocument = task.getResult();
                     if (artisanDocument != null && artisanDocument.exists()) {
                         // User is an artisan
+
                         Intent artisanIntent = new Intent(Login.this, ArtisanProfileActivity.class);
                         startActivity(artisanIntent);
                         finish();
@@ -148,6 +169,7 @@ public class Login extends AppCompatActivity {
                                         Intent clientIntent = new Intent(Login.this, MainActivity.class);
                                         startActivity(clientIntent);
                                         finish();
+
                                     }
                                 }
                             }
