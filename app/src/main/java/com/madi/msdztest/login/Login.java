@@ -45,7 +45,7 @@ public class Login extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Logging in...");
+        progressDialog.setMessage("Connection...");
         progressDialog.setCancelable(false);
 
         TextView textView = findViewById(R.id.CreerCompte);

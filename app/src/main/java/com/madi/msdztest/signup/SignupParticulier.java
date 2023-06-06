@@ -1,6 +1,7 @@
 package com.madi.msdztest.signup;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -39,7 +40,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class SignupParticulier extends Fragment {
-
+    private ProgressDialog progressDialog;
     private EditText ClientNom, ClientPrenom, ClientEmail, ClientNumeroTlf, ClientMdp, ClientReMdp;
     private static final String TAG="SignupParticulier";
     public SignupParticulier() {
@@ -51,6 +52,12 @@ public class SignupParticulier extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_signup_paticulier, container, false);
+
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setTitle("Création du compte");
+        progressDialog.setMessage("Veuillez patienter...");
+        progressDialog.setCanceledOnTouchOutside(false);
+
         ClientNom = view.findViewById(R.id.Client_Nom);
         ClientPrenom = view.findViewById(R.id.Client_Prenom);
         ClientEmail = view.findViewById(R.id.Client_Email);
@@ -132,11 +139,13 @@ public class SignupParticulier extends Fragment {
     }
 
     private void registerUser(String textNom, String textPrenom, String textEmail, String textNumeroTlfn, String textMdp) {
+        progressDialog.show();
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         auth.createUserWithEmailAndPassword(textEmail, textMdp).addOnCompleteListener((Activity) getContext(), new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
+                progressDialog.dismiss();
                 if (task.isSuccessful()) {
                     Toast.makeText(getContext(),"Votre compte est créer avec succés",Toast.LENGTH_LONG).show();
                     FirebaseUser firebaseUser = auth.getCurrentUser();

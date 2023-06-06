@@ -4,6 +4,7 @@ import static android.app.Activity.RESULT_OK;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -57,23 +58,20 @@ import java.util.regex.Pattern;
 
 public class SignupArtisan extends Fragment {
 
+
     private EditText ArtisanNom, ArtisanPrenom, ArtisanEmail, ArtisanNumeroTlf, ArtisanMdp, ArtisanReMdp;
     Spinner spinnerWilaya, spinnerCat;
     RecyclerView recyclerView;
     Button charger;
     ArrayList<Uri> uri = new ArrayList<>();
     RecyclerAdapterCharger adapter;
+    private ProgressDialog progressDialog;
     private static final int Read_permission = 101;
     private static final int PICK_IMAGE = 1;
 
 
-    private final static String TAG ="SignupArtisan";
 
-
-
-
-
-
+    private final static String TAG = "SignupArtisan";
 
 
     @Override
@@ -84,38 +82,41 @@ public class SignupArtisan extends Fragment {
     }
 
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_signup_artisan, container, false);
 
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setTitle("Création du compte");
+        progressDialog.setMessage("Veuillez patienter...");
+        progressDialog.setCanceledOnTouchOutside(false);
+
         recyclerView = view.findViewById(R.id.recycler_view_images);
         charger = view.findViewById(R.id.btn_charger);
-        adapter = new RecyclerAdapterCharger(uri,getContext());
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
+        adapter = new RecyclerAdapterCharger(uri, getContext());
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         recyclerView.setAdapter(adapter);
-
 
 
         charger.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
-                        != PackageManager.PERMISSION_GRANTED){
+                        != PackageManager.PERMISSION_GRANTED) {
 
-                    ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},Read_permission);
+                    ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, Read_permission);
                     return;
                 }
 
-            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                 intent.setType("image/*");
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
-                    intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE,true);
+                    intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
 
                 }
-                startActivityForResult(Intent.createChooser(intent,"Selectionner les images"),PICK_IMAGE);
+                startActivityForResult(Intent.createChooser(intent, "Selectionner les images"), PICK_IMAGE);
             }
         });
 
@@ -149,12 +150,10 @@ public class SignupArtisan extends Fragment {
                 if (categorie.equals("Catégorie")) {
                     Toast.makeText(getContext(), "Veuillez sélectionner votre catégorie ", Toast.LENGTH_SHORT).show();
 
-                }
-                else if (wilaya.equals("Selectionner Wilaya")) {
+                } else if (wilaya.equals("Selectionner Wilaya")) {
                     Toast.makeText(getContext(), "Veuillez sélectionner votre wilaya !", Toast.LENGTH_SHORT).show();
 
-                }
-                else if (TextUtils.isEmpty(textNom)) {
+                } else if (TextUtils.isEmpty(textNom)) {
                     Toast.makeText(getContext(), "Veuillez entrer votre Nom !", Toast.LENGTH_SHORT).show();
                     ArtisanNom.setError("Nom est obligatoire");
                     ArtisanNom.requestFocus();
@@ -163,7 +162,6 @@ public class SignupArtisan extends Fragment {
                     ArtisanPrenom.setError("Prénom est obligatoire");
                     ArtisanPrenom.requestFocus();
 
-                   
 
                 } else if (TextUtils.isEmpty(textEmail)) {
                     Toast.makeText(getContext(), "Veuillez entrer votre E-mail !", Toast.LENGTH_SHORT).show();
@@ -187,7 +185,7 @@ public class SignupArtisan extends Fragment {
                     ArtisanNumeroTlf.setError("Numéro de téléphone invalide");
                     ArtisanNumeroTlf.requestFocus();
 
-            } else if (TextUtils.isEmpty(textMdp)) {
+                } else if (TextUtils.isEmpty(textMdp)) {
                     Toast.makeText(getContext(), "Veuillez entrer votre mot de passe !", Toast.LENGTH_SHORT).show();
                     ArtisanMdp.setError("mot de passe est obligatoire");
                     ArtisanMdp.requestFocus();
@@ -206,26 +204,28 @@ public class SignupArtisan extends Fragment {
 
                     ArtisanMdp.clearComposingText();
                     ArtisanReMdp.clearComposingText();
-                } else if( uri.size() == 0){
+                } else if (uri.size() == 0) {
                     Toast.makeText(getContext(), "Veuillez selectionner aumoins une images !", Toast.LENGTH_SHORT).show();
 
                 } else {
-                    registerUser(textNom, textPrenom, textEmail, textNumeroTlf, textMdp,wilaya,categorie);
+                    registerUser(textNom, textPrenom, textEmail, textNumeroTlf, textMdp, wilaya, categorie);
                 }
             }
         });
 
         return view;
     }
-    public void uploadImagesToFirestore(){
+
+    public void uploadImagesToFirestore() {
         FirebaseStorageManager storageManager = new FirebaseStorageManager();
         storageManager.uploadImages(uri.toArray(new Uri[uri.size()]), new FirebaseStorageManager.UploadCallback() {
             @Override
-            public void onUploadProgress(int progress) {}
+            public void onUploadProgress(int progress) {
+            }
 
             @Override
             public void onUploadComplete() {
-                Log.i("upload","done");
+                Log.i("upload", "done");
                 Intent intent = new Intent(getContext(), Login.class);
                 startActivity(intent);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -234,19 +234,22 @@ public class SignupArtisan extends Fragment {
 
             @Override
             public void onUploadFailure(Exception e) {
-                Log.i("upload","failed " + e.getMessage());
+                Log.i("upload", "failed " + e.getMessage());
 
             }
         });
 
     }
+
     private void registerUser(String textNom, String textPrenom, String textEmail, String textNumeroTlf, String textMdp, String wilaya, String categorie) {
+        progressDialog.show();
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         auth.createUserWithEmailAndPassword(textEmail, textMdp).addOnCompleteListener((Activity) getContext(), new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
+                progressDialog.dismiss();
                 if (task.isSuccessful()) {
                     Toast.makeText(getContext(), "Votre compte est créer avec succés", Toast.LENGTH_SHORT).show();
                     FirebaseUser firebaseUser = auth.getCurrentUser();
@@ -269,33 +272,32 @@ public class SignupArtisan extends Fragment {
                     userDocument.set(artisan).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void unused) {
-                                    Log.d(TAG,"Votre compte est créer avec succés");
+                                    Log.d(TAG, "Votre compte est créer avec succés");
                                     uploadImagesToFirestore();
                                 }
                             })
                             .addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
-                                    Log.w(TAG,"Erreur !", e);
+                                    Log.w(TAG, "Erreur !", e);
                                 }
                             });
 
-                }
-                else {
+                } else {
                     try {
                         throw task.getException();
                     } catch (FirebaseAuthWeakPasswordException e) {
                         ArtisanMdp.setError("Votre mot de passe doit comporter au moins 8 chiffres");
                         ArtisanMdp.requestFocus();
-                    } catch (FirebaseAuthInvalidCredentialsException e){
+                    } catch (FirebaseAuthInvalidCredentialsException e) {
                         ArtisanEmail.setError("Adresse e-mail invalide. Veuillez entrer un email valide");
                         ArtisanEmail.requestFocus();
                     } catch (FirebaseAuthUserCollisionException e) {
                         ArtisanEmail.setError("L'e-mail que vous avez saisi est déjà associé à un autre compte. Veuillez utiliser une adresse e-mail différente");
                         ArtisanEmail.requestFocus();
                     } catch (Exception e) {
-                        Log.e(TAG,e.getMessage());
-                        Toast.makeText(getContext(),e.getMessage() , Toast.LENGTH_SHORT).show();
+                        Log.e(TAG, e.getMessage());
+                        Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -366,11 +368,12 @@ public class SignupArtisan extends Fragment {
         wilayas.add("58. Touggourt");
 
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item,wilayas);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, wilayas);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerWilaya.setAdapter(adapter);
     }
-    public void initSpinnerCat(){
+
+    public void initSpinnerCat() {
         ArrayList<String> categorie = new ArrayList<String>();
         categorie.add("Catégorie");
         categorie.add("Climatisation");
@@ -383,7 +386,7 @@ public class SignupArtisan extends Fragment {
         categorie.add("Réparation de toit");
         categorie.add("Soudeur");
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item,categorie);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item, categorie);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCat.setAdapter(adapter);
 
@@ -394,11 +397,11 @@ public class SignupArtisan extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == 1 && resultCode == RESULT_OK && null != data){
-            if (data.getClipData() !=null){
+        if (requestCode == 1 && resultCode == RESULT_OK && null != data) {
+            if (data.getClipData() != null) {
                 int countOfImages = data.getClipData().getItemCount();
 
-                for (int i=0;i<countOfImages;i++){
+                for (int i = 0; i < countOfImages; i++) {
                     Uri imageuri = data.getClipData().getItemAt(i).getUri();
                     uri.add(imageuri);
                 }
@@ -412,7 +415,7 @@ public class SignupArtisan extends Fragment {
             }
             adapter.notifyDataSetChanged();
         } else {
-            Toast.makeText(getContext(),"You haven't pick any image",Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), "You haven't pick any image", Toast.LENGTH_LONG).show();
         }
 
     }
