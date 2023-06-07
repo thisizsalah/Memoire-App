@@ -168,7 +168,7 @@ public class EditArtisan extends AppCompatActivity {
 
                      updatedArtisan(textNom,textPrenom, textEmail, textTelephone, textDescription);
                     FirebaseStorageManager storageManager = new FirebaseStorageManager();
-                    storageManager.uploadImage(imgProfile, new FirebaseStorageManager.UploadCallback() {
+                    storageManager.uploadProfileImage(imgProfile, new FirebaseStorageManager.UploadCallback() {
                         @Override
                         public void onUploadProgress(int progress) {
 

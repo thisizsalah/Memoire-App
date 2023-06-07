@@ -60,7 +60,7 @@ public class FirebaseStorageManager {
 
     public void uploadImage(Uri imageUri, UploadCallback callback) {
         String fileName = UUID.randomUUID().toString();
-        StorageReference storageRef = storage.getReference().child("imageProfile/" + fileName);
+        StorageReference storageRef = storage.getReference().child("images/" + fileName);
 
         UploadTask uploadTask = storageRef.putFile(imageUri);
         uploadTask.addOnProgressListener(taskSnapshot -> {
@@ -79,7 +79,7 @@ public class FirebaseStorageManager {
 
                     // Add the image URL to the user's "images" array
                     db.collection("Artisans").document(userId)
-                            .update("imageProfile", imageUrl)
+                            .update("images", FieldValue.arrayUnion(imageUrl))
                             .addOnSuccessListener(aVoid -> {
                                 callback.onUploadComplete();
                             })
@@ -95,6 +95,41 @@ public class FirebaseStorageManager {
     }
 
     public void uploadImageParticulier(Uri imageUri, UploadCallback callback) {
+        String fileName = UUID.randomUUID().toString();
+        StorageReference storageRef = storage.getReference().child("imageProfileP/" + fileName);
+
+        UploadTask uploadTask = storageRef.putFile(imageUri);
+        uploadTask.addOnProgressListener(taskSnapshot -> {
+            double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
+            callback.onUploadProgress((int) progress);
+        }).addOnSuccessListener(taskSnapshot -> {
+            storageRef.getDownloadUrl().addOnSuccessListener(uri -> {
+                String imageUrl = uri.toString();
+
+                FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+                if (currentUser != null) {
+                    String userId = currentUser.getUid();
+                    // Create a new image object
+                    Map<String, Object> imageData = new HashMap<>();
+                    imageData.put("imageUrl", imageUrl);
+
+                    // Add the image URL to the user's "images" array
+                    db.collection("Particuliers").document(userId)
+                            .update("imageProfile", imageUrl)
+                            .addOnSuccessListener(aVoid -> {
+                                callback.onUploadComplete();
+                            })
+                            .addOnFailureListener(e -> {
+                                callback.onUploadFailure(e);
+                            });
+                }
+
+            });
+        }).addOnFailureListener(e -> {
+            callback.onUploadFailure(e);
+        });
+    }
+    public void uploadProfileImage(Uri imageUri, UploadCallback callback) {
         String fileName = UUID.randomUUID().toString();
         StorageReference storageRef = storage.getReference().child("imageProfile/" + fileName);
 
@@ -114,7 +149,7 @@ public class FirebaseStorageManager {
                     imageData.put("imageUrl", imageUrl);
 
                     // Add the image URL to the user's "images" array
-                    db.collection("Particuliers").document(userId)
+                    db.collection("Artisans").document(userId)
                             .update("imageProfile", imageUrl)
                             .addOnSuccessListener(aVoid -> {
                                 callback.onUploadComplete();
