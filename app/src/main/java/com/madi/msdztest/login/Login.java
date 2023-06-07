@@ -45,7 +45,7 @@ public class Login extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Connection...");
+        progressDialog.setMessage("Connection en cours...");
         progressDialog.setCancelable(false);
 
         TextView textView = findViewById(R.id.CreerCompte);
@@ -133,7 +133,7 @@ public class Login extends AppCompatActivity {
                             Toast.makeText(Login.this, "Utilisateur introuvable! Veuillez vérifier vos informations", Toast.LENGTH_SHORT).show();
                         }
                     } else {
-                        Toast.makeText(Login.this, "Échec de la connexion! Veuillez vérifier vos informations ", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Login.this, "E-mail ou mot de passe incorrect! Veuillez vérifier vos informations ", Toast.LENGTH_SHORT).show();
                     }
                 }
             }

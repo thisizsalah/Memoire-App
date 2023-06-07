@@ -415,7 +415,7 @@ public class SignupArtisan extends Fragment {
             }
             adapter.notifyDataSetChanged();
         } else {
-            Toast.makeText(getContext(), "You haven't pick any image", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), "Veuillez selectionner aumoins une images !", Toast.LENGTH_LONG).show();
         }
 
     }
